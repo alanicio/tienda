@@ -125,16 +125,16 @@ class ProductoController extends Controller
                         
                         switch ($c) {
                             case 0:
-                                    //$data=DB::connection()->getPdo()->quote(utf8_encode($datos[$c]));
-                                    $producto->modelo=$datos[$c];
+                                    $data=DB::connection()->getPdo()->quote(utf8_encode($datos[$c]));
+                                    $producto->modelo=$data;
                                 break;
                             case 1:
-                                    //$data=DB::connection()->getPdo()->quote(utf8_encode($datos[$c]));
-                                    $producto->marca=$datos[$c];
+                                    $data=DB::connection()->getPdo()->quote(utf8_encode($datos[$c]));
+                                    $producto->marca=$data;
                                 break;
                             case 2:
-                                    //$data=DB::connection()->getPdo()->quote(utf8_encode($datos[$c]));
-                                    $producto->titulo=$datos[$c];
+                                    $data=DB::connection()->getPdo()->quote(utf8_encode($datos[$c]));
+                                    $producto->titulo=$data;
                                 break;
                             case 5:
                                     $producto->costo=$datos[$c];
@@ -142,8 +142,8 @@ class ProductoController extends Controller
                                     $producto->peso=$datos[$c];
                                 break;
                             case 22:
-                                    //$data=DB::connection()->getPdo()->quote(utf8_encode($datos[$c]));
-                                    $producto->descripcion=$datos[$c];
+                                    $data=DB::connection()->getPdo()->quote(utf8_encode($datos[$c]));
+                                    $producto->descripcion=$data;
                                 break;        
                             case 23:
                                     $producto->imagen=$datos[$c];
