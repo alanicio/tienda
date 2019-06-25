@@ -23,7 +23,7 @@
           <div class="card-body">
             <h3 class="card-title">{{stripslashes(utf8_decode($producto->titulo))}}</h3>
             <h4>${{$producto->costo}}</h4>
-            <p class="card-text">{!!$producto->descripcion!!}</p>
+            <p class="card-text">{!!str_replace("'", "",stripslashes(str_replace('\n',"",utf8_decode($producto->descripcion))))!!}</p>
             <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
             4.0 stars
           </div>
