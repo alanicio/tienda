@@ -25,6 +25,15 @@
 
 	<body>
 		@include('nav')
-		@yield('content')
+		<!-- Page Content -->
+  		<div class="container">
+    		<div class="row">
+    			@include('Tienda.categorias')
+				@yield('content')
+			</div>
+    		<!-- /.row -->
+  		</div>
+  		<!-- /.container -->
+		@include('footer')
 	</body>
 </html>

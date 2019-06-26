@@ -16,5 +16,6 @@ Route::get('/', function () {
 });
 
 Route::get('cargar_productos','Producto\ProductoController@CargarProductos');
+Route::get('cargar_categorias','Producto\CategoriaController@CargarCategorias');
 
 Route::resource('tienda','Producto\ProductoController');
