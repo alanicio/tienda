@@ -12,4 +12,14 @@ class Categoria extends Model
         'categoria_padre',
         'nivel',
     ];
+
+    public function padre() {
+        return $this->belongsTo('App\Categoria','categoria_padre');
+    }
+    public function hijos() {
+        return $this->hasMany('App\Categoria','categoria_padre');
+    }
+    public function productos(){
+        return $this->hasMany('App\Producto');
+    }
 }

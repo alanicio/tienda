@@ -22,6 +22,8 @@ class CreateProductosTable extends Migration
             $table->decimal('peso');
             $table->string('imagen');
             $table->longText('descripcion');
+            $table->integer('categoria_id')->unsigned()->nullable();
+            $table->foreign('categoria_id')->references('id')->on('categorias');
             $table->timestamps();
         });
     }

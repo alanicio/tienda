@@ -13,6 +13,11 @@ class Producto extends Model
         'costo',
         'peso',
         'imagen',
-        'descripcion'
+        'descripcion',
+        'categoria_id'
     ];
+
+    public function categoria(){
+        return $this->belongsTo('App\Categoria');
+    }
 }

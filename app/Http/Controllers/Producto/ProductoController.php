@@ -90,30 +90,7 @@ class ProductoController extends Controller
 
     public function CargarProductos()
     {
-        // $fila = 1;
-        // if (($gestor = fopen("data.csv", "r")) !== FALSE) {
-        //     while (($datos = fgetcsv($gestor, 1000, ",")) !== FALSE) {
-        //         //$numero = count($datos);
-        //         $fila++;
-        //         for ($c=22; $c < 23; $c++) {
-        //             if(isset($datos[$c]))
-        //                 echo $c.' '.$datos[$c] . "<br />\n";
-        //             else
-        //                 echo "VACIO". "<br />\n";
-        //         }
-
-        //         if($fila==20)
-        //             break;
-                
-        //     }
-        //     fclose($gestor);
-        // }
-
-
-
-
-
-        // file_put_contents("data.csv", fopen("http://syscom.mx/principal/reporte_art_hora?cadena1=104511683&cadena2=ecab1f7d0a20621a021555208cf8b441&all=1&cadena3=1&img=1&ctg=8&sel=0&lnk=1", 'r'));
+        set_time_limit(300);
         $fila = 0;  
         if (($gestor = fopen("data.csv", "r")) !== FALSE) {
             while (($datos = fgetcsv($gestor)) !== FALSE) {
@@ -122,7 +99,7 @@ class ProductoController extends Controller
                 if($fila)
                 {
                     $producto=new Producto();
-                    for ($c=0; $c < 24; $c++) {
+                    for ($c=0; $c < 27; $c++) {
                         
                         switch ($c) {
                             case 0:
@@ -148,7 +125,22 @@ class ProductoController extends Controller
                                 break;        
                             case 23:
                                     $producto->imagen=$datos[$c];
-                                break;   
+                                break; 
+                            case 26:
+                                    $categoria=Categoria::where('nombre',$datos[$c])->get();
+                                    $categoria2=Categoria::where('nombre',$datos[$c-1])->get();
+                                    $categoria3=Categoria::where('nombre',$datos[$c-2])->get();
+                                    if($categoria->count())
+                                    {
+                                        $producto->categoria_id=$categoria->first()->id;
+                                    }
+                                    elseif ($categoria2->count()) {
+                                        $producto->categoria_id=$categoria2->first()->id;
+                                    }
+                                    elseif ($categoria3->count()) {
+                                        $producto->categoria_id=$categoria3->first()->id;
+                                    }
+                                break;
                            
                             // default:
                             //     # code...
@@ -162,5 +154,10 @@ class ProductoController extends Controller
             fclose($gestor);
         }
         return $this->index();
+    }
+
+    public function CargarDatos()
+    {
+
     }
 }

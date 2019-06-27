@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Producto;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Categoria;
+use App\Producto;
 
 class CategoriaController extends Controller
 {
@@ -47,7 +48,8 @@ class CategoriaController extends Controller
      */
     public function show($id)
     {
-        //
+        $productos=Producto::where('categoria_id',$id)->paginate(30);
+        return view('Tienda.tienda',['productos'=>$productos]);
     }
 
     /**
@@ -86,6 +88,7 @@ class CategoriaController extends Controller
 
     public function CargarCategorias()
     {
+        set_time_limit(300);
         $fila = 0;
         
         //$categorias['nivel']=[];
@@ -98,7 +101,7 @@ class CategoriaController extends Controller
                         $verificar=1;
                         $categorias=Categoria::get();
                         foreach ($categorias as $c ) {
-                            if($c->nombre==$datos[$i])
+                            if($c->nombre==$datos[$i] || $datos[$i]=='---')
                             {
                                 $verificar=0;
                             }
@@ -121,7 +124,7 @@ class CategoriaController extends Controller
             }
             fclose($gestor);
         }
-        dd($categorias);
+        dd('Categorias cargadas exitosamente');
 
     }
 }
