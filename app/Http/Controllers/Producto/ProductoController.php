@@ -126,20 +126,66 @@ class ProductoController extends Controller
                             case 23:
                                     $producto->imagen=$datos[$c];
                                 break; 
-                            case 26:
-                                    $categoria=Categoria::where('nombre',$datos[$c])->get();
-                                    $categoria2=Categoria::where('nombre',$datos[$c-1])->get();
-                                    $categoria3=Categoria::where('nombre',$datos[$c-2])->get();
-                                    if($categoria->count())
-                                    {
-                                        $producto->categoria_id=$categoria->first()->id;
+                             // case 24:
+                            //         $categoria1=Categoria::where('nombre',$datos[$c])->get();/*encuentra nivel 1*/
+                            //         foreach ($categoria1->hijos as $c2) {
+                            //            if($c2->nombre==$datos[$c+1])/*Encuentra nivel 2*/
+                            //            {
+                            //                 if(isset($c2->hijos))
+                            //                 {
+                            //                     foreach ($c2->hijos as $c3) {
+                            //                         if($c3->nombre==$datos[$c+2])
+                            //                         {
+                            //                             $producto->categoria_id=$c3->id;
+                            //                             break 2;
+
+                            //                         }
+                            //                     }
+                            //                 }
+                            //                 else
+                            //                 {
+                            //                         $producto->categoria_id=$c2->id;
+                            //                         break;
+                            //                 }
+
+                            //            }
+                            //         }
+                            case 24:
+                                    $categoria1=Categoria::where('nombre',$datos[$c])->get();
+                                    foreach ($categoria1 as $c1) {
+                                        foreach ($c1->hijos as $h) {
+                                            if($datos[$c+1]==$h->nombre || $datos[$c+2]==$h->nombre)
+                                            {
+                                                if(isset($h->hijos))
+                                                {
+                                                    foreach ($h->hijos as $nieto) {
+                                                        if($datos[$c+2]==$nieto->nombre)
+                                                        {
+                                                            $producto->categoria_id=$nieto->id;
+                                                            break 3;
+                                                        }
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    $producto->categoria_id=$h->id;
+                                                    break 2;
+                                                }   
+                                            }
+                                        }
                                     }
-                                    elseif ($categoria2->count()) {
-                                        $producto->categoria_id=$categoria2->first()->id;
-                                    }
-                                    elseif ($categoria3->count()) {
-                                        $producto->categoria_id=$categoria3->first()->id;
-                                    }
+                                    //dd($categoria2);
+
+                                    // if($categoria->count())
+                                    // {
+                                    //     $producto->categoria_id=$categoria->first()->id;
+                                    // }
+                                    // elseif ($categoria2->count()) {
+                                    //     $producto->categoria_id=$categoria2->first()->id;
+                                    // }
+                                    // elseif ($categoria3->count()) {
+                                    //     $producto->categoria_id=$categoria3->first()->id;
+                                    // }
                                 break;
                            
                             // default:

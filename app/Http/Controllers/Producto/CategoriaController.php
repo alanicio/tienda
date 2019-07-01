@@ -88,12 +88,13 @@ class CategoriaController extends Controller
 
     public function CargarCategorias()
     {
-        set_time_limit(300);
+         set_time_limit(20000);
         $fila = 0;
         
         //$categorias['nivel']=[];
         if (($gestor = fopen("data.csv", "r")) !== FALSE) {
             while (($datos = fgetcsv($gestor)) !== FALSE) {
+                echo $fila.'<br>';
                 if($fila)
                 {
                     for($i=24;$i<=26;$i++)
@@ -101,10 +102,27 @@ class CategoriaController extends Controller
                         $verificar=1;
                         $categorias=Categoria::get();
                         foreach ($categorias as $c ) {
-                            if($c->nombre==$datos[$i] || $datos[$i]=='---')
+                            if($i>24)
                             {
-                                $verificar=0;
+                                if(isset($c->padre))
+                                {
+                                    if(($c->nombre==$datos[$i] && ($c->padre->nombre==$datos[$i-1] || $c->padre->nombre==$datos[$i-2])) || $datos[$i]=='---' || $datos[$i]=='Todos' || $datos[$i]=='Todas' || $datos[$i]=='Ver Todas' || $datos[$i]=='Todo')
+                                    {
+                                        $verificar=0;
+                                        break;
+                                    }
+                                }
+                                
                             }
+                            else
+                            {
+                                if($c->nombre==$datos[$i] || $datos[$i]=='---' || $datos[$i]=='Todos' || $datos[$i]=='Todas' || $datos[$i]=='Ver Todas')
+                                {
+                                    $verificar=0;
+                                    break;
+                                }
+                            }
+                                
                         }
                         if($verificar)
                         {
@@ -113,18 +131,29 @@ class CategoriaController extends Controller
                             $categoria->nivel=$i-23;
                             if($i>24)
                             {
-                                //dd(Categoria::where('nombre',$datos[$i-1])->get('id')->toArray()[0]['id']);
-                                $categoria->categoria_padre=Categoria::where('nombre',$datos[$i-1])->get('id')->toArray()[0]['id'];
+                                $padre=Categoria::where('nombre',$datos[$i-1])->get('id');
+                                if($padre->count())
+                                {
+                                    $categoria->categoria_padre=$padre->toArray()[0]['id'];
+                                }
+                                else
+                                {
+                                    $categoria->categoria_padre=Categoria::where('nombre',$datos[$i-2])->get('id')->toArray()[0]['id'];
+                                }
                             }
                             $categoria->save();
                         }
                     }                        
                 }
                 $fila++;
+                //echo $fila.'<br>';
+                // if($fila==2000)
+                //     break;
+
             }
             fclose($gestor);
+            dd('Categorias cargadas exitosamente');
         }
-        dd('Categorias cargadas exitosamente');
 
     }
 }

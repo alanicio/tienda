@@ -14,13 +14,18 @@
 			      <div class="card-body">
 			        @foreach($c->hijos as $h)
 			      
-  						<div id="accordion2">
-			        		<a href="#" class="list-group-item" data-toggle="collapse" data-target="#collapse{{$h->id}}" aria-expanded="true" aria-controls="collapse{{$h->id}}">{{$h->nombre}}</a>
+  						<div id="accordion{{$h->id}}">
+  							@if(count($h->hijos)>0)
+  								<a href="#" class="list-group-item" data-toggle="collapse" data-target="#collapse{{$h->id}}" aria-expanded="true" aria-controls="collapse{{$h->id}}">{{$h->nombre}}</a>
+  							@else
+  								<a href="{{route('categorias.show',['id'=>$h->id])}}" class="list-group-item" style="color: red;">{{$h->nombre}}</a><br>
+  							@endif
+			        		
 			        		<div id="collapse{{$h->id}}" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion2">
 			      				<div class="card-body">
 			      					@php
 			      						foreach($h->hijos as $n){
-			      							echo '<a href="'.route('categorias.show',['id'=>$n->id]).'" class="list-group-item">'.$n->nombre.'</a><br>';
+			      							echo '<a href="'.route('categorias.show',['id'=>$n->id]).'" class="list-group-item" style="color:red;">'.$n->nombre.'</a><br>';
 			      						}
 			      					@endphp
 			      				</div>
