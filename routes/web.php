@@ -20,6 +20,8 @@ Route::get('cargar_productos','Producto\ProductoController@CargarProductos');
 Route::get('cargar_categorias','Producto\CategoriaController@CargarCategorias');
 
 Route::post('search','Producto\ProductoController@Buscar');
+Route::get('add_producto/{id}','Venta\VentaController@AddCarrito');
 
+Route::resource('ventas','Venta\VentaController');
 Route::resource('tienda','Producto\ProductoController');
 Route::resource('categorias','Producto\CategoriaController');

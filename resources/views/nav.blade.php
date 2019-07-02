@@ -23,7 +23,7 @@
             <a class="nav-link" href="{{Route('tienda.index')}}">Tienda</i></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#"><i class="fas fa-shopping-cart"></i></a>
+            <a class="nav-link" href="{{Route('ventas.index')}}"><i class="fas fa-shopping-cart"></i></a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">About</a>

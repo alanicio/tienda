@@ -1,10 +1,6 @@
 @extends('principal')
 @section('content')
 
-
-
-
-
 <div class="col-lg-9">
 
   <div class="card mt-4">
@@ -41,9 +37,18 @@
 
 </div>
 <!-- /.col-lg-9 -->
-<!-- <script type="text/javascript">
-  $.ajax({
-    
+<script type="text/javascript">
+  $('#add_item').click(function(){
+    $.ajax({
+        type: "GET",
+        url: '{{url("/add_producto","$producto->id")}}',
+        success: function(){
+          $('#add_item').attr('class','btn btn-success disabled');
+          $('#add_item').html('<i class="fas fa-check-square"></i> Añadido al carrito');
+          //$("i").attr('class','fas fa-check-square');
+        },
+    });
   });
-</script> -->
+    
+</script>
 @endsection
