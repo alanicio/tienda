@@ -142,32 +142,28 @@ class CategoriaController extends Controller
                             $categoria=new Categoria();
                             $categoria->nombre=$datos[$i];
                             $categoria->nivel=$i-23;
-                            if($i>24)
+                            if($i==26 && ($datos[$i-1]=='---' || $datos[$i-1]=='Todos' || $datos[$i-1]=='Todas' || $datos[$i-1]=='Ver Todas' || $datos[$i-1]=='Todo'))
                             {
-                                $padres=Categoria::where('nombre',$datos[$i-1])->get();
-                                if($padres->count())
-                                {
-                                    foreach ($padres as $padre) {
-                                        if($padre->nivel<$categoria->nivel)
-                                        {
-                                            $categoria->categoria_padre=$padre->id;
-                                            break;
-                                        }
-                                    }
-                                    //$categoria->categoria_padre=$padre->toArray()[0]['id'];
-                                }
-                                else
-                                {
-                                    $padres=Categoria::where('nombre',$datos[$i-2])->get();
-                                    $categoria->nivel=2;
-                                    foreach ($padres as $padre) {
-                                        if($padre->nivel<$categoria->nivel)
-                                        {
-                                            $categoria->categoria_padre=$padre->id;
-                                            break;
-                                        }
+                                $padres=Categoria::where([['nombre',$datos[$i-2]],['nivel','<',2]])->get();
+                                $categoria->nivel=2;
+                                $categoria->categoria_padre=$padres->first()->id;
+                                break;
+                                     
+                            }
+                            elseif ($i==26) {
+                                $padres=Categoria::where([['nombre',$datos[$i-1]],['nivel','<',3]])->get();
+                                foreach ($padres as $padre) {
+                                    if($padre->padre->nombre==$datos[$i-2])
+                                    {
+                                        $categoria->categoria_padre=$padre->id;
+                                        break;
                                     }
                                 }
+                            }
+                            elseif($i==25)
+                            {
+                                $padre=Categoria::where([['nombre',$datos[$i-1]],['nivel','<',2]])->get();
+                                $categoria->categoria_padre=$padre->first()->id;
                             }
                             $categoria->save();
                         }
@@ -177,8 +173,8 @@ class CategoriaController extends Controller
                 
 
                 //echo $fila.'<br>';
-                if($fila==3000)
-                    break;
+                // if($fila==3000)
+                //     break;
 
             }
             fclose($gestor);
