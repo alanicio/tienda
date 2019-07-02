@@ -19,5 +19,7 @@ Route::get('cargar_datos','Producto\ProductoController@CargarDatos');
 Route::get('cargar_productos','Producto\ProductoController@CargarProductos');
 Route::get('cargar_categorias','Producto\CategoriaController@CargarCategorias');
 
+Route::post('search','Producto\ProductoController@Buscar');
+
 Route::resource('tienda','Producto\ProductoController');
 Route::resource('categorias','Producto\CategoriaController');

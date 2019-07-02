@@ -88,6 +88,13 @@ class ProductoController extends Controller
         //
     }
 
+    public function Buscar(Request $request)
+    {
+        $palabra=$request->search;
+        $productos=Producto::where('modelo','LIKE','%'.$palabra.'%')->orWhere('marca','LIKE','%'.$palabra.'%')->orWhere('titulo','LIKE','%'.$palabra.'%')->orWhere('descripcion','LIKE','%'.$palabra.'%')->paginate(30);
+        return view('Tienda.tienda',['productos'=>$productos]);
+    }
+
     public function CargarProductos()
     {
         set_time_limit(300);

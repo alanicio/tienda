@@ -10,6 +10,7 @@
   <div class="card mt-4">
     <img class="card-img-top img-fluid" src="{{$producto->imagen}}" alt="">
     <div class="card-body">
+      <a id="add_item" type="button" class="btn btn-success" style="float: right;"><i class="fas fa-cart-plus"></i> Añadir al carrito</a>
       <h3 class="card-title">{{stripslashes(utf8_decode($producto->titulo))}}</h3>
       <h4>${{$producto->costo}}</h4>
       <p class="card-text">{!!str_replace("'", "",stripslashes(str_replace('\n',"",utf8_decode($producto->descripcion))))!!}</p>
@@ -40,8 +41,9 @@
 
 </div>
 <!-- /.col-lg-9 -->
-
-
-
-  
+<!-- <script type="text/javascript">
+  $.ajax({
+    
+  });
+</script> -->
 @endsection
