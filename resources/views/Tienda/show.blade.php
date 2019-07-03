@@ -8,7 +8,7 @@
     <div class="card-body">
       <a id="add_item" type="button" class="btn btn-success" style="float: right;"><i class="fas fa-cart-plus"></i> Añadir al carrito</a>
       <h3 class="card-title">{{stripslashes(utf8_decode($producto->titulo))}}</h3>
-      <h4>${{$producto->costo}}</h4>
+      <h4>${{Currency::conv($from = 'USD', $to = 'MXN', $value = $producto->costo, $decimals = 2)}}</h4>
       <p class="card-text">{!!str_replace("'", "",stripslashes(str_replace('\n',"",utf8_decode($producto->descripcion))))!!}</p>
       <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
       4.0 stars

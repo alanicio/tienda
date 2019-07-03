@@ -25,3 +25,5 @@ Route::get('add_producto/{id}','Venta\VentaController@AddCarrito');
 Route::resource('ventas','Venta\VentaController');
 Route::resource('tienda','Producto\ProductoController');
 Route::resource('categorias','Producto\CategoriaController');
+
+Route::get('example','ExampleController@example');

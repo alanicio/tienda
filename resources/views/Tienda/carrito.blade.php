@@ -18,15 +18,20 @@
 				@foreach($productos as $p)
 					<tr>
 					  <th scope="row">{{stripslashes(utf8_decode($p->titulo))}}</th>
-					  <td>${{$p->costo}}</td>
-					  <td><input type="number" name="cantidad" id="cantidad" min="1" value="1" style="width: 100px;"></td>
-					  <td id="total">0</td>
+					  <td><input id="costo{{$p->id}}" type="text" value="${{Currency::conv($from = 'USD', $to = 'MXN', $value = $p->costo, $decimals = 2)}}" readonly="" style="width: 100px"></td>
+					  <td><input type="number" name="cantidad" id="{{$p->id}}" min="1" value="1" style="width: 100px;"></td>
+					  <td id="total{{$p->id}}">{{Currency::conv($from = 'USD', $to = 'MXN', $value = $p->costo, $decimals = 2)}}</td>
 					</tr>
 				@endforeach
 			</tbody>
 		</table>
   </div>
 </div>
-	
-		
+<script type="text/javascript">
+	$('input').change(function(){
+		var fila=$(this).attr('id');
+		//alert();
+		$('#total'+fila).html(parseFloat($(this).val())*{{Currency::conv($from = 'USD', $to = 'MXN', $value = $p->costo, $decimals = 2)}});
+	});
+</script>
 @endsection

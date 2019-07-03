@@ -48,7 +48,7 @@
             
             <p class="card-text">Modelo: {{utf8_decode($p->modelo)}}<br>Marca:{{utf8_decode($p->marca)}}</p>
             @if($p->costo>0)
-              <h5>${{$p->costo}}</h5>
+              <h5>${{Currency::conv($from = 'USD', $to = 'MXN', $value = $p->costo, $decimals = 2)}}</h5>
             @else
               <h5>Sin inventario</h5>
             @endif
