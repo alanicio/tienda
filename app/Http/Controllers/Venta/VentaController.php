@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers;
 use Session;
 use App\Producto;
+use Currency;
 
 class VentaController extends Controller
 {
@@ -16,7 +17,8 @@ class VentaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    {   
+        //dd(Producto::findMany(array_slice(Session::all(), 3)));
         return view('Tienda.carrito',['productos'=>Producto::findMany(array_slice(Session::all(), 3))]);
     }
 
@@ -89,5 +91,11 @@ class VentaController extends Controller
     public function AddCarrito($id)
     {
         Session::put('producto'.$id,$id);
+    }
+
+    public function ConvertC($id)
+    {
+        $value=Producto::find($id)->costo;
+        return Currency::conv($from = 'USD', $to = 'MXN', $value, $decimals = 2);
     }
 }

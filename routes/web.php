@@ -21,6 +21,7 @@ Route::get('cargar_categorias','Producto\CategoriaController@CargarCategorias');
 
 Route::post('search','Producto\ProductoController@Buscar');
 Route::get('add_producto/{id}','Venta\VentaController@AddCarrito');
+Route::get('convert_c/{id}','Venta\VentaController@ConvertC');
 
 Route::resource('ventas','Venta\VentaController');
 Route::resource('tienda','Producto\ProductoController');
