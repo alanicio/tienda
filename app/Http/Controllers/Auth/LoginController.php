@@ -25,6 +25,7 @@ class LoginController extends Controller
      *
      * @var string
      */
+    //Session::flush();
     protected $redirectTo = '/home';
 
     /**

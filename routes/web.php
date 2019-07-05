@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('inicio');
 });
 
 Route::get('cargar_datos','Producto\ProductoController@CargarDatos');
@@ -28,3 +28,7 @@ Route::resource('tienda','Producto\ProductoController');
 Route::resource('categorias','Producto\CategoriaController');
 
 Route::get('example','ExampleController@example');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

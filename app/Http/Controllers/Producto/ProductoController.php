@@ -111,15 +111,15 @@ class ProductoController extends Controller
                         switch ($c) {
                             case 0:
                                     $data=DB::connection()->getPdo()->quote(utf8_encode($datos[$c]));
-                                    $producto->modelo=$data;
+                                    $producto->modelo=substr($data,1,strlen($data)-2);
                                 break;
                             case 1:
                                     $data=DB::connection()->getPdo()->quote(utf8_encode($datos[$c]));
-                                    $producto->marca=$data;
+                                    $producto->marca=substr($data,1,strlen($data)-2);
                                 break;
                             case 2:
                                     $data=DB::connection()->getPdo()->quote(utf8_encode($datos[$c]));
-                                    $producto->titulo=$data;
+                                    $producto->titulo=substr($data,1,strlen($data)-2);
                                 break;
                             case 5:
                                     $producto->costo=$datos[$c];

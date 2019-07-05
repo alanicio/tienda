@@ -1,7 +1,7 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="#">Distribuidora Nonex</a>
+      <a class="navbar-brand" href="/">Distribuidora Nonex</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -15,17 +15,49 @@
         </form>
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="/">Home
+            <a class="nav-link" href="/">Inicio
               <span class="sr-only">(current)</span>
             </a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{Route('tienda.index')}}">Tienda</i></a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{{Route('ventas.index')}}"><i class="fas fa-shopping-cart"></i></a>
-          </li>
-          <li class="nav-item">
+         
+
+          @if(Auth::check())
+            <li class="nav-item">
+              <a class="nav-link" href="{{Route('ventas.create')}}"><i class="fas fa-shopping-cart"></i></a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{Auth::User()->name}}</a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="{{Route('ventas.show',['id'=>Auth::User()->id])}}">Mi cuenta</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{{ route('logout') }}"
+                                         onclick="event.preventDefault();
+                                                       document.getElementById('logout-form').submit();">
+                                          {{ __('Salir') }}
+                </a>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+              </div>
+            </li>
+          @else
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Sesion</a>
+              <div class="dropdown-menu">
+                <a class="dropdown-item" href="{{Route('login')}}">Iniciar sesión</a>
+                <a class="dropdown-item" href="{{Route('register')}}">Registrarse</a>       
+              </div>
+            </li>
+
+          @endif
+
+            
+
+         <!--  <li class="nav-item">
             <a class="nav-link" href="#">About</a>
           </li>
           <li class="nav-item">
@@ -33,7 +65,7 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Contact</a>
-          </li>
+          </li> -->
         </ul>
       </div>
     </div>

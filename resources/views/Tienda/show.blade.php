@@ -6,7 +6,13 @@
   <div class="card mt-4">
     <img class="card-img-top img-fluid" src="{{$producto->imagen}}" alt="">
     <div class="card-body">
-      <a id="add_item" type="button" class="btn btn-success" style="float: right;"><i class="fas fa-cart-plus"></i> Añadir al carrito</a>
+      @if(Auth::check())
+        <a id="add_item" type="button" class="btn btn-success" style="float: right;"><i class="fas fa-cart-plus"></i> Añadir al carrito</a>
+      @else
+        <a id="add_item" type="button" class="btn btn-primary" style="margin-bottom: 50px;" href="{{Route('login')}}"><i class="fas fa-sign-in-alt"></i> Inicia sesión para comprar</a>
+
+        <a id="add_item" type="button" class="btn btn-warning" style="margin-bottom: 50px;" href="{{Route('register')}}">¿No tienes cuenta?</a>
+      @endif
       <h3 class="card-title">{{stripslashes(utf8_decode($producto->titulo))}}</h3>
       <h4>${{Currency::conv($from = 'USD', $to = 'MXN', $value = $producto->costo, $decimals = 2)}}</h4>
       <p class="card-text">{!!str_replace("'", "",stripslashes(str_replace('\n',"",utf8_decode($producto->descripcion))))!!}</p>
