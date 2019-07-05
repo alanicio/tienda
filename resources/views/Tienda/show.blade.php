@@ -1,4 +1,15 @@
 @extends('principal')
+@section('keywords')
+  @isset($producto->categoria)
+    <meta name="keywords" content="{{stripslashes(utf8_decode($producto->titulo))}}, {{stripslashes(utf8_decode($producto->marca))}},{{stripslashes(utf8_decode($producto->modelo))}},{{$producto->categoria->nombre}},{{$producto->categoria->padre->nombre}}">
+  @endisset
+
+  @empty($producto->categoria)
+    <meta name="keywords" content="{{stripslashes(utf8_decode($producto->titulo))}}, {{stripslashes(utf8_decode($producto->marca))}},{{stripslashes(utf8_decode($producto->modelo))}},otros">
+  @endempty
+@endsection
+
+
 @section('content')
 
 <div class="col-lg-9">

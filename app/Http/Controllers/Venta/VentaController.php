@@ -81,7 +81,7 @@ class VentaController extends Controller
             $pivote->save();
         }
         
-        return 'venta guardada';
+        return $this->show(Auth::User()->id);
     }
 
     /**
