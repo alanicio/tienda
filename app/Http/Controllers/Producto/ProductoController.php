@@ -163,7 +163,7 @@ class ProductoController extends Controller
                                         foreach ($c1->hijos as $h) {
                                             if($datos[$c+1]==$h->nombre || $datos[$c+2]==$h->nombre)
                                             {
-                                                if(isset($h->hijos))
+                                                if(isset($h->hijos) && $datos[$c+2]!='Todos' && $datos[$c+2]!='Todas' && $datos[$c+2]!='Ver Todas' && $datos[$c+2]!='Todo' && $datos[$c+2]!='---')
                                                 {
                                                     foreach ($h->hijos as $nieto) {
                                                         if($datos[$c+2]==$nieto->nombre)

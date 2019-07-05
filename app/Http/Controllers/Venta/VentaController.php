@@ -134,6 +134,11 @@ class VentaController extends Controller
         Session::put('producto'.$id,$id);
     }
 
+    public function RmCarrito($id)
+    {
+        Session::forget('producto'.$id);
+    }
+
     public function ConvertC($id)
     {
         $value=Producto::find($id)->costo;

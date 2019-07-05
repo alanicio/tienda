@@ -14,6 +14,7 @@
 					  <th scope="col">Precio c/u</th>
 					  <th scope="col">Cantidad</th>
 					  <th scope="col">Total</th>
+					  <th scope="col">Quitar</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -22,11 +23,12 @@
 					@endphp
 					@foreach($productos as $p)
 						<input type="hidden" name="id[]" value="{{$p->id}}">
-						<tr>
+						<tr id="row{{$p->id}}">
 						  <th scope="row">{{stripslashes(utf8_decode($p->titulo))}}</th>
 						  <td><input id="costo{{$p->id}}" type="text" value="${{Currency::conv($from = 'USD', $to = 'MXN', $value = $p->costo, $decimals = 2)}}" readonly="" style="width: 100px"></td>
-						  <td><input type="number" name="cantidad[]" id="{{$p->id}}" min="1" value="1" style="width: 100px;"></td>
+						  <td><input type="number" name="cantidad[]" id="{{$p->id}}" min="1" value="1" style="width: 75px;"></td>
 						  <td id="total{{$p->id}}">${{Currency::conv($from = 'USD', $to = 'MXN', $value = $p->costo, $decimals = 2)}}</td>
+						  <td><a id="minus{{$p->id}}"><i class="fas fa-minus-circle" style="color:red;"></i></a></td>
 						</tr>
 						@php
 							$total+=Currency::conv($from = 'USD', $to = 'MXN', $value = $p->costo, $decimals = 2);
@@ -43,6 +45,21 @@
   </div>
 </div>
 <script type="text/javascript">
+	$('a').click(function(){
+		var row=$(this).attr('id').substring(5);
+		$.ajax({
+	        type: "GET",
+	        url: '{{url("/quitar_carrito")}}'+'/'+row,
+	        success: function(){
+	        	var sustraendo=parseFloat($('#total'+row).html().replace('$',''));
+	        	$('#row'+row).remove();
+	        	var minuendo=parseFloat($('#Ftotal').html().replace('$',''));
+	        	$('#Ftotal').html('$'+(minuendo-sustraendo).toFixed(2));
+	        },
+	    });
+
+	});
+
 	$('input').change(function(){
 		var fila=$(this).attr('id');
 		var total=0;
@@ -56,7 +73,7 @@
 	        		//console.log($(this).html())
 	        		total+=parseFloat($(this).html().replace('$',''));
 	        	});
-	        	console.log(total);
+	        	//console.log(total);
 	        	$('#Ftotal').html('$'+total.toFixed(2));
 	        },
 	    });
