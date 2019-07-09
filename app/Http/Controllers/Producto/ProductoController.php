@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Producto;
 use Illuminate\Support\Facades\DB;
 use App\Categoria;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class ProductoController extends Controller
 {
@@ -17,7 +18,7 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        return view('Tienda.tienda',['productos'=>Producto::paginate(30)]);
+        return view('Tienda.tienda',['productos'=>Producto::orderBy('inventario','desc')->paginate(15)]);
     }
 
     /**
@@ -91,12 +92,37 @@ class ProductoController extends Controller
     public function Buscar(Request $request)
     {
         $palabra=$request->search;
-        $productos=Producto::where('modelo','LIKE','%'.$palabra.'%')->orWhere('marca','LIKE','%'.$palabra.'%')->orWhere('titulo','LIKE','%'.$palabra.'%')->orWhere('descripcion','LIKE','%'.$palabra.'%')->paginate(30);
+        $productos=Producto::where('modelo','LIKE','%'.$palabra.'%')->orWhere('marca','LIKE','%'.$palabra.'%')->orWhere('titulo','LIKE','%'.$palabra.'%')->orWhere('descripcion','LIKE','%'.$palabra.'%')->paginate(15);
         return view('Tienda.tienda',['productos'=>$productos]);
     }
 
+    //algoritmo de busqueda en proceso de mejora
+    // public function Buscar(Request $request)
+    // {
+    //     $palabras=explode(" ",$request->search);
+    //     $palabra=$request->search;
+    //     $productos=collect(new Producto);
+    //     // $productos=Producto::where('modelo','LIKE','%'.$palabra.'%')->orWhere('marca','LIKE','%'.$palabra.'%')->orWhere('titulo','LIKE','%'.$palabra.'%')->orWhere('descripcion','LIKE','%'.$palabra.'%')->get();
+    //     foreach ($palabras as $p) {
+    //         $por_palabra=Producto::where('modelo','LIKE','%'.$p.'%')->orWhere('marca','LIKE','%'.$p.'%')->orWhere('titulo','LIKE','%'.$p.'%')->orWhere('descripcion','LIKE','%'.$p.'%')->get();
+    //         foreach ($por_palabra as $pp) {
+    //             $productos->push($pp);
+    //         }
+    //     }
+    //     $currentPage = LengthAwarePaginator::resolveCurrentPage();
+    //     $perPage = 15;
+    //     $currentPageItems = $productos->slice(($currentPage * $perPage) - $perPage, $perPage)->all();
+    //     $paginatedItems= new LengthAwarePaginator($currentPageItems , count($productos), $perPage);
+    //     $paginatedItems->setPath($request->url());
+    //     //dd($pagination);
+    //     return view('Tienda.tienda',['productos'=>$paginatedItems]);
+    // }
+
     public function CargarProductos()
     {
+        // $html = file_get_contents('https://www.syscom.mx/');
+        // $posicion=strpos($html,'TC:');
+        // $MXN=floatval(substr($html, $posicion+5,5));
         set_time_limit(300);
         $fila = 0;  
         if (($gestor = fopen("data.csv", "r")) !== FALSE) {
@@ -122,15 +148,23 @@ class ProductoController extends Controller
                                     $producto->titulo=substr($data,1,strlen($data)-2);
                                 break;
                             case 5:
-                                    $producto->costo=$datos[$c];
-                            case 21:
+                                    $producto->costoUSD=$datos[$c];
+                                    $producto->costoMXN=($datos[$c]*$datos[11]);
+                                    break;
+                            case 6:
+                                    $producto->inventario=$datos[$c];
+                                    // for($z=6;$z<=19;$z++)
+                                    // {
+                                    //     $producto->inventario+=intval($datos[$z]);
+                                    // }
+                            case 8:
                                     $producto->peso=$datos[$c];
                                 break;
-                            case 22:
+                            case 9:
                                     $data=DB::connection()->getPdo()->quote(utf8_encode($datos[$c]));
                                     $producto->descripcion=$data;
                                 break;        
-                            case 23:
+                            case 10:
                                     $producto->imagen=$datos[$c];
                                 break; 
                              // case 24:
@@ -157,7 +191,7 @@ class ProductoController extends Controller
 
                             //            }
                             //         }
-                            case 24:
+                            case 12:
                                     $categoria1=Categoria::where('nombre',$datos[$c])->get();
                                     foreach ($categoria1 as $c1) {
                                         foreach ($c1->hijos as $h) {

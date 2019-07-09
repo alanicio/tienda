@@ -20,7 +20,7 @@
 			  		<tr>
 				      <th scope="row">{{$venta->id}}</th>
 				      <td>{{$venta->created_at->format('d/m/Y')}}</td>
-				      <td>${{$venta->total}}</td>
+				      <td>${{round($venta->totalMXN,2)}}</td>
 				      <td><i class="clickable far fa-arrow-alt-circle-down" data-toggle="collapse" data-target="#accordionV{{$venta->id}}"></i></td>
 				    </tr>
 				    <tr>
@@ -31,6 +31,7 @@
 					    			<th>Modelo</th>
 					    			<th>Titulo</th>
 					    			<th>Cantidad</th>
+					    			<th>Costo en la compra</th>
 					    		</thead>
 					    		<tbody>
 								    @foreach($venta->productos as $p)
@@ -39,6 +40,7 @@
 							    			<td>{{utf8_decode($p->modelo)}}</td>
 							    			<td>{{stripslashes(utf8_decode($p->titulo))}}</td>
 							    			<td>{{$p->pivot->cantidad}}</td>
+							    			<td>${{round($p->pivot->precio_en_compra_MXN,2)}}</td>
 							    		</tr>
 								    @endforeach
 					    		</tbody>

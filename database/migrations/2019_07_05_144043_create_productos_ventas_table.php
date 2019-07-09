@@ -20,6 +20,8 @@ class CreateProductosVentasTable extends Migration
             $table->foreign('venta_id')->references('id')->on('ventas');
             $table->foreign('producto_id')->references('id')->on('productos');
             $table->integer('cantidad')->unsigned();
+            $table->decimal('precio_en_compra_USD');
+            $table->decimal('precio_en_compra_MXN',15,5);
             $table->timestamps();
         });
     }

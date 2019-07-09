@@ -9,6 +9,8 @@ class productos_ventas extends Model
     protected $fillable = [
         'venta_id',
         'producto_id',
-        'cantidad'
+        'cantidad',
+        'precio_en_compra_USD',
+		'precio_en_compra_MXN'
     ];
 }

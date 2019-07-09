@@ -25,18 +25,18 @@
 						<input type="hidden" name="id[]" value="{{$p->id}}">
 						<tr id="row{{$p->id}}">
 						  <th scope="row">{{stripslashes(utf8_decode($p->titulo))}}</th>
-						  <td><input id="costo{{$p->id}}" type="text" value="${{Currency::conv($from = 'USD', $to = 'MXN', $value = $p->costo, $decimals = 2)}}" readonly="" style="width: 100px"></td>
+						  <td><input id="costo{{$p->id}}" type="text" value="${{ round($p->costoMXN,2)}}" readonly="" style="width: 150px"></td>
 						  <td><input type="number" name="cantidad[]" id="{{$p->id}}" min="1" value="1" style="width: 75px;"></td>
-						  <td id="total{{$p->id}}">${{Currency::conv($from = 'USD', $to = 'MXN', $value = $p->costo, $decimals = 2)}}</td>
+						  <td id="total{{$p->id}}">${{round($p->costoMXN,2)}}</td>
 						  <td><a id="minus{{$p->id}}"><i class="fas fa-minus-circle" style="color:red;"></i></a></td>
 						</tr>
 						@php
-							$total+=Currency::conv($from = 'USD', $to = 'MXN', $value = $p->costo, $decimals = 2);
+							$total+=$p->costoMXN;
 						@endphp
 					@endforeach
 					<tr>
 						<th scope="row">Total</th>
-						<td ID="Ftotal">${{$total}}</td>
+						<td ID="Ftotal">${{round($total,2)}}</td>
 					</tr>
 				</tbody>
 			</table>

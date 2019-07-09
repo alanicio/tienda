@@ -8,7 +8,8 @@ class Venta extends Model
 {
      protected $fillable = [
         'subtotal',
-        'total',
+        'totalMXN',
+        'totalUSD',
         'user_id'
     ];
 
@@ -21,6 +22,6 @@ class Venta extends Model
     }
 
     public function productos(){
-        return $this->belongsToMany('App\Producto','productos_ventas')->withPivot('producto_id','cantidad');
+        return $this->belongsToMany('App\Producto','productos_ventas')->withPivot('producto_id','cantidad','precio_en_compra_MXN','precio_en_compra_USD');
     }
 }

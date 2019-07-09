@@ -19,7 +19,7 @@ Route::get('cargar_datos','Producto\ProductoController@CargarDatos');
 Route::get('cargar_productos','Producto\ProductoController@CargarProductos');
 Route::get('cargar_categorias','Producto\CategoriaController@CargarCategorias');
 
-Route::post('search','Producto\ProductoController@Buscar');
+Route::get('search','Producto\ProductoController@Buscar');
 Route::get('add_producto/{id}','Venta\VentaController@AddCarrito');
 Route::get('quitar_carrito/{id}','Venta\VentaController@RmCarrito');
 Route::get('convert_c/{id}','Venta\VentaController@ConvertC');

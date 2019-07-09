@@ -65,22 +65,33 @@ class VentaController extends Controller
             return redirect('/login');
         }
         $productos=Producto::findMany($request->id);
-        $total=0;
+        $totalMXN=0;
+        $totalUSD=0;
         //dd($request->cantidad);
         foreach ($productos as $index=>$p) {
-            $total+=($p->costo*$request->cantidad[$index]);
+            $totalMXN+=($p->costoMXN*$request->cantidad[$index]);
+            $totalUSD+=($p->costoUSD*$request->cantidad[$index]);
         }
-        $venta->subtotal=Currency::conv($from = 'USD', $to = 'MXN', $value = $total, $decimals = 2);
-        $venta->total=Currency::conv($from = 'USD', $to = 'MXN', $value = $total, $decimals = 2);
+        $venta->totalMXN=$totalMXN;
+        $venta->totalUSD=$totalUSD;
         $venta->save();
         foreach ($productos as $index=>$p) {
             $pivote=new productos_ventas();
             $pivote->producto_id=$p->id;
+            $pivote->precio_en_compra_USD=$p->costoUSD;
+            $pivote->precio_en_compra_MXN=$p->costoMXN;
             $pivote->venta_id=$venta->id;
             $pivote->cantidad=$request->cantidad[$index];
             $pivote->save();
         }
-        
+        $i=0;
+        foreach (Session::all() as $key => $value) {
+            if(strpos($key,'roducto'))
+            {
+                Session::forget('producto'.$value);
+            }
+        }
+ 
         return $this->show(Auth::User()->id);
     }
 
@@ -141,7 +152,7 @@ class VentaController extends Controller
 
     public function ConvertC($id)
     {
-        $value=Producto::find($id)->costo;
-        return Currency::conv($from = 'USD', $to = 'MXN', $value, $decimals = 2);
+        $value=Producto::find($id);
+        return $value->costoMXN;
     }
 }

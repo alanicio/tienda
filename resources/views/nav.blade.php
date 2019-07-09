@@ -6,8 +6,8 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
-        <form class="form-inline ml-auto" method="POST" action="{{URL('search')}}">
-          {{ csrf_field() }}
+        <form class="form-inline ml-auto" method="GET" action="{{URL('search')}}">
+          <!-- {{ csrf_field() }} -->
           <div class="md-form my-0">
             <input class="form-control" type="text" placeholder="Buscar producto..." aria-label="Search" name="search">
           </div>

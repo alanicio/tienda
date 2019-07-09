@@ -37,6 +37,7 @@
   <div class="row">
 
     @foreach($productos as $p)
+    <!-- {{$p->id}} -->
       <div class="col-lg-4 col-md-6 mb-4">
         <div class="card h-100">
           <a href="{{route('tienda.show',['id'=>$p->id])}}"><img class="card-img-top" src="{{strlen($p->imagen)?$p->imagen:asset('imgs/not_found.jpeg')}}" alt=""></a>
@@ -47,8 +48,8 @@
 
             
             <p class="card-text">Modelo: {{utf8_decode($p->modelo)}}<br>Marca:{{utf8_decode($p->marca)}}</p>
-            @if($p->costo>0)
-              <h5>${{Currency::conv($from = 'USD', $to = 'MXN', $value = $p->costo, $decimals = 2)}}</h5>
+            @if($p->costoMXN>0 && $p->inventario>0)
+              <h5>${{round($p->costoMXN,2)}}</h5>
             @else
               <h5>Sin inventario</h5>
             @endif
