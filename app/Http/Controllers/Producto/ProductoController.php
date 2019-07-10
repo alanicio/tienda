@@ -119,8 +119,8 @@ class ProductoController extends Controller
     /*Version 3, BUSCA CON ACENTO Y SIN ACENTO, PERO ES ALGO LENTO*/
     public function Buscar(Request $request)
     {
-        $oracion=$request->search;
-        $palabras=preg_split('/\s+/', $request->search, -1, PREG_SPLIT_NO_EMPTY);
+        $oracion=strtolower($request->search);
+        $palabras=preg_split('/\s+/', strtolower($request->search), -1, PREG_SPLIT_NO_EMPTY);
         $productos=DB::table('productos');      
         foreach ($palabras as $key => $palabra) {
             $productos->where(function($query) use($palabra){
