@@ -39,15 +39,16 @@
 
         <a id="add_item" type="button" class="btn btn-warning" style="margin-bottom: 50px;" href="{{Route('register')}}">¿No tienes cuenta?</a>
       @endif
+      <h2>{{stripslashes(utf8_decode($producto->titulo))}}</h2>
       <h3 class="card-title">${{round($producto->costoMXN,2)}}</h4>
       <p class="card-text">{!!str_replace("'", "",stripslashes(str_replace('\n',"",utf8_decode($producto->descripcion))))!!}</p>
-      <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
-      4.0 stars
+     <!--  <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
+      4.0 stars -->
     </div>
   </div>
   <!-- /.card -->
 
-  <div class="card card-outline-secondary my-4">
+  <!-- <div class="card card-outline-secondary my-4">
     <div class="card-header">
       Product Reviews
     </div>
@@ -63,7 +64,7 @@
       <hr>
       <a href="#" class="btn btn-success">Leave a Review</a>
     </div>
-  </div>
+  </div> -->
   <!-- /.card -->
 
 </div>

@@ -48,7 +48,7 @@ class CategoriaController extends Controller
      */
     public function show($id)
     {
-        $productos=Producto::where('categoria_id',$id)->paginate(30);
+        $productos=Producto::where('categoria_id',$id)->paginate(9);
         return view('Tienda.tienda',['productos'=>$productos]);
     }
 
