@@ -36,8 +36,8 @@
 
   <div class="row">
 
+
     @foreach($productos as $p)
-    <!-- {{$p->id}} -->
       <div class="col-lg-4 col-md-6 mb-4">
         <div class="card h-100">
           <a href="{{route('tienda.show',['id'=>$p->id])}}"><img class="card-img-top" src="{{strlen($p->imagen)?$p->imagen:asset('imgs/not_found.jpeg')}}" alt=""></a>
@@ -60,7 +60,7 @@
         </div>
       </div>
     @endforeach
-    {{$productos->links()}}  
+    {{$productos->appends(Request::except('page'))->links()}}  
 <!-- 
 
 -->

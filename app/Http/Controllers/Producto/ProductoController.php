@@ -18,6 +18,7 @@ class ProductoController extends Controller
      */
     public function index()
     {
+        $index=true;
         return view('Tienda.tienda',['productos'=>Producto::orderBy('inventario','desc')->paginate(9)]);
     }
 
@@ -117,21 +118,87 @@ class ProductoController extends Controller
 
 
     /*Version 3, BUSCA CON ACENTO Y SIN ACENTO, PERO ES ALGO LENTO*/
+    // public function Buscar(Request $request)
+    // {
+    //     $oracion=strtolower($request->search);
+    //     $palabras=preg_split('/\s+/', strtolower($request->search), -1, PREG_SPLIT_NO_EMPTY);
+    //     //dd($palabras);
+    //     $productos=DB::table('productos');      
+    //     foreach ($palabras as $key => $palabra) {
+    //         $productos->where(function($query) use($palabra){
+    //             $query->orWhere('marca','LIKE','%'.$palabra.'%')->orWhere('titulo','LIKE','%'.$palabra.'%')->orWhere('descripcion','LIKE','%'.$palabra.'%')->orWhere('marca','LIKE','%'.utf8_encode($palabra).'%')->orWhere('titulo','LIKE','%'.utf8_encode($palabra).'%')->orWhere('descripcion','LIKE','%'.utf8_encode($palabra).'%');
+    //             $acentos=$this->PosiblesAcentos($palabra);
+    //             foreach ($acentos as $ac) {
+    //                 $query->orWhere('marca','LIKE','%'.$ac.'%')->orWhere('titulo','LIKE','%'.$ac.'%')->orWhere('descripcion','LIKE','%'.$ac.'%')->orWhere('marca','LIKE','%'.utf8_encode($ac).'%')->orWhere('titulo','LIKE','%'.utf8_encode($ac).'%')->orWhere('descripcion','LIKE','%'.utf8_encode($ac).'%');
+    //             }
+    //         });
+    //     }
+    //     $productos->orWhere('modelo','LIKE','%'.$oracion.'%')->orWhere('marca','LIKE','%'.$oracion.'%')->orWhere('titulo','LIKE','%'.$oracion.'%')->orWhere('descripcion','LIKE','%'.$oracion.'%');
+    //     return view('Tienda.tienda',['productos'=>$productos->paginate(9)]);
+    // }
+
+    // public function PosiblesAcentos($string)
+    // {
+    //     $resul=[];
+    //     $original=$string;
+
+    //     $i=0;
+    //     while(strpos($string, 'a')!==FALSE){
+    //         $resul[]=substr_replace($original,'á',strpos($string,'a')-$i,1);
+    //         $string=substr_replace($string,'á',strpos($string,'a'),1);
+    //         $i++;
+    //     }
+
+    //     $i=0;
+    //     while(strpos($string, 'e')!==FALSE){
+    //         $resul[]=substr_replace($original,'é',strpos($string,'e')-$i,1);
+    //         $string=substr_replace($string,'é',strpos($string,'e'),1);
+    //         $i++;
+    //     }
+
+    //     $i=0;
+    //     while(strpos($string, 'i')!==FALSE){
+    //         $resul[]=substr_replace($original,'í',strpos($string,'i')-$i,1);
+    //         $string=substr_replace($string,'í',strpos($string,'i'),1);
+    //         $i++;
+    //     }
+
+    //     $i=0;
+    //     while(strpos($string, 'o')!==FALSE){
+    //         $resul[]=substr_replace($original,'ó',strpos($string,'o')-$i,1);
+    //         $string=substr_replace($string,'ó',strpos($string,'o'),1);
+    //         $i++;
+    //     }
+
+    //     $i=0;
+    //     while(strpos($string, 'u')!==FALSE){
+    //         $resul[]=substr_replace($original,'ú',strpos($string,'u')-$i,1);
+    //         $string=substr_replace($string,'ú',strpos($string,'u'),1);
+    //         $i++;
+    //     }
+
+    //     return $resul;
+    // }
+    /*BLOQUE DE CODIGO DE ARRIBA ES DE LA VERSION 3*/
+
+    /*Version 4, Mejorada un poco la velocidad, alrededor de 3 s*/
     public function Buscar(Request $request)
     {
+        //$start = microtime(true);
         $oracion=strtolower($request->search);
         $palabras=preg_split('/\s+/', strtolower($request->search), -1, PREG_SPLIT_NO_EMPTY);
-        $productos=DB::table('productos');      
+        //dd($palabras);
+        $productos=DB::table('productos');
+        //dd($palabras);
         foreach ($palabras as $key => $palabra) {
             $productos->where(function($query) use($palabra){
-                $query->orWhere('marca','LIKE','%'.$palabra.'%')->orWhere('titulo','LIKE','%'.$palabra.'%')->orWhere('descripcion','LIKE','%'.$palabra.'%')->orWhere('marca','LIKE','%'.utf8_encode($palabra).'%')->orWhere('titulo','LIKE','%'.utf8_encode($palabra).'%')->orWhere('descripcion','LIKE','%'.utf8_encode($palabra).'%');
+                $query->orWhere('marca','LIKE','%'.utf8_encode($palabra).'%')->orWhere('titulo','LIKE','%'.utf8_encode($palabra).'%')->orWhere('modelo','LIKE','%'.utf8_encode($palabra).'%')->orWhere('descripcion','LIKE','%'.utf8_encode($palabra).'%');
                 $acentos=$this->PosiblesAcentos($palabra);
                 foreach ($acentos as $ac) {
-                    $query->orWhere('marca','LIKE','%'.$ac.'%')->orWhere('titulo','LIKE','%'.$ac.'%')->orWhere('descripcion','LIKE','%'.$ac.'%')->orWhere('marca','LIKE','%'.utf8_encode($ac).'%')->orWhere('titulo','LIKE','%'.utf8_encode($ac).'%')->orWhere('descripcion','LIKE','%'.utf8_encode($ac).'%');
+                    $query->orWhere('marca','LIKE','%'.utf8_encode($ac).'%')->orWhere('titulo','LIKE','%'.utf8_encode($ac).'%')->orWhere('descripcion','LIKE','%'.utf8_encode($ac).'%');
                 }
             });
-        }
-        $productos->orWhere('modelo','LIKE','%'.$oracion.'%')->orWhere('marca','LIKE','%'.$oracion.'%')->orWhere('titulo','LIKE','%'.$oracion.'%')->orWhere('descripcion','LIKE','%'.$oracion.'%');
+        }   
         return view('Tienda.tienda',['productos'=>$productos->paginate(9)]);
     }
 
@@ -177,7 +244,7 @@ class ProductoController extends Controller
 
         return $resul;
     }
-    /*BLOQUE DE CODIGO DE ARRIBA ES DE LA VERSION 3*/
+    /*BLOQUE DE CODIGO DE ARRIBA ES DE LA VERSION 4*/
 
     public function CargarProductos()
     {
