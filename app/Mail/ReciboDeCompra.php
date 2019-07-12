@@ -6,8 +6,9 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use App\Venta;
 
-class OrderShipped extends Mailable
+class ReciboDeCompra extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -16,9 +17,10 @@ class OrderShipped extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public $venta;
+    public function __construct(Venta $venta)
     {
-        //
+        $this->venta=$venta;
     }
 
     /**
@@ -28,6 +30,6 @@ class OrderShipped extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name');
+        return $this->view('mails.Recibo');
     }
 }

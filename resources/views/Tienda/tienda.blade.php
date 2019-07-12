@@ -61,9 +61,7 @@
       </div>
     @endforeach
     {{$productos->appends(Request::except('page'))->links()}}  
-<!-- 
-
--->
+    {{isset($start)?microtime(true)-$start:''}}
   </div>
   <!-- /.row -->
 

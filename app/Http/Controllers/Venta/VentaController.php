@@ -12,6 +12,8 @@ use App\User;
 use App\productos_ventas;
 use Illuminate\Support\Facades\Auth;
 use Currency;
+use App\Mail\ReciboDeCompra;
+use Mail;
 
 class VentaController extends Controller
 {
@@ -91,7 +93,14 @@ class VentaController extends Controller
                 Session::forget('producto'.$value);
             }
         }
- 
+        $this->Nonextore($venta);
+        return $this->show(Auth::User()->id);
+    }
+
+    //Enviar correo de la venta realizada
+    public function Nonextore(Venta $venta)
+    {
+        Mail::to($venta->user->email)->send(new ReciboDeCompra($venta));
         return $this->show(Auth::User()->id);
     }
 
