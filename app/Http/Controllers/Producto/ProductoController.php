@@ -8,6 +8,8 @@ use App\Producto;
 use Illuminate\Support\Facades\DB;
 use App\Categoria;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Input;
 
 class ProductoController extends Controller
 {
@@ -327,7 +329,6 @@ class ProductoController extends Controller
         $start = microtime(true);
         //$oracion=strtolower($request->search);
         $palabras=preg_split('/\s+/', strtolower($this->LimpiarAcentos($request->search)), -1, PREG_SPLIT_NO_EMPTY);
-        //dd($palabras);
         $productos=DB::table('productos');
         //dd($palabras);
         foreach ($palabras as $key => $palabra) {
@@ -339,8 +340,60 @@ class ProductoController extends Controller
                 }
             });
         }
-        //$productos->orderBy('titulo',utf8_encode($request->search));
-        return view('Tienda.tienda',['productos'=>$productos->paginate(9)]);
+        //dd($productos->paginate(9));
+        $productos=$this->Ordenarresultados($productos->get(),$palabras);
+        
+        //Get current page form url e.g. &page=2, at default 1
+        $currentPage=Input::get('page',1);
+
+        //Define how many items to show in each page
+        $perPage = 9;
+
+        //Slice the collection according to per page
+        $currentPageResults = $productos->slice(($currentPage-1)*$perPage,$perPage)->all();
+
+        //Create the paginator and pass it to the view
+        $paginatedResults= new LengthAwarePaginator($currentPageResults, count($productos),$perPage,$currentPage,['path'=>$request->url(),'query'=>$request->query()]);
+        //dd($paginatedResults);
+
+        return view('Tienda.tienda',['productos'=>$paginatedResults]);
+    }
+
+    public function Ordenarresultados(Collection $productos,$palabras)
+    {
+       // $word = "Many Blocks";
+       //  if ( preg_match("~\bblocks\b~",$word) )
+       //    dd("matched");
+       //  else
+       //    dd("no match");
+        $matchResul=[];
+        foreach ($productos as $key => $p) {
+            $match=0;
+            $titulo=str_replace(['/','-',' '],'-',utf8_decode($p->titulo));
+            $product=strtolower($this->LimpiarAcentos($titulo));
+            foreach ($palabras as $palabra) {
+               $palabra=strtolower($this->LimpiarAcentos($palabra));
+               if ( preg_match("~\b".$palabra."\b~",$product) )
+               {
+                $match++;
+               }
+               if(strpos($product, $palabra)===0)
+               {
+                $match++;
+               }
+           }
+           $matchResul[]=$match;
+        }
+        //dd($productos[0]);
+        arsort($matchResul);
+        $keyOrder = array_keys($matchResul);
+        $sorted=$productos->sortBy(function($model,$key) use ($keyOrder){
+             return array_search($key, $keyOrder);
+
+        });
+
+        //dd($sorted);
+        return $sorted;
     }
 
     public function LimpiarAcentos($string)
