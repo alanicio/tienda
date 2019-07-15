@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('{categoria}/{id}-{titulo}-{marca}-{modelo}','Producto\ProductoController@permalink');
 
 Route::get('/', function () {
     return view('inicio');

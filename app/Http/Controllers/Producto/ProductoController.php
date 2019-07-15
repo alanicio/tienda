@@ -56,6 +56,14 @@ class ProductoController extends Controller
         return view('Tienda.show',['producto'=>$producto]);
     }
 
+    public function permalink($categoria,$id,$titulo,$marca,$modelo)
+    {
+        //dd($id);
+        $producto=Producto::find($id);
+        //dd($producto);
+        return view('Tienda.show',['producto'=>$producto]);
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

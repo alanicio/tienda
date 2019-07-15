@@ -40,7 +40,11 @@
         <a id="add_item" type="button" class="btn btn-warning" style="margin-bottom: 50px;" href="{{Route('register')}}">¿No tienes cuenta?</a>
       @endif
       <h2>{{stripslashes(utf8_decode($producto->titulo))}}</h2>
-      <h3 class="card-title">${{round($producto->costoMXN,2)}}</h4>
+      <h5>Marca: {{stripslashes(utf8_decode($producto->marca))}}</h5>
+      <h5>Modelo: {{stripslashes(utf8_decode($producto->modelo))}}</h5>
+      <br>
+      <h4 class="card-title">${{round($producto->costoMXN,2)}}</h4>
+      <br>
       <p class="card-text">{!!str_replace("'", "",stripslashes(str_replace('\n',"",utf8_decode($producto->descripcion))))!!}</p>
      <!--  <span class="text-warning">&#9733; &#9733; &#9733; &#9733; &#9734;</span>
       4.0 stars -->
