@@ -14,7 +14,8 @@ class Producto extends Model
         'peso',
         'imagen',
         'descripcion',
-        'categoria_id'
+        'categoria_id',
+        'inventario'
     ];
 
     public function categoria(){

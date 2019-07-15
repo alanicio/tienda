@@ -62,6 +62,7 @@
             @else
               <h5>Sin inventario</h5>
             @endif
+            Existencias: {{$p->inventario}}
           </div>
           <div class="card-footer">
             <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>

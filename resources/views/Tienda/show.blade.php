@@ -18,22 +18,26 @@
     <img class="card-img-top img-fluid" src="{{$producto->imagen}}" alt="">
     <div class="card-body">
       @if(Auth::check())
-        @php
-          $verificar=1;
-          foreach(array_slice(Session::all(), 4) as $id)
-          {
-            if($producto->id==$id)
+        @if($producto->inventario>0)
+          @php
+            $verificar=1;
+            foreach(array_slice(Session::all(), 4) as $id)
             {
-              echo '<a id="add_item" type="button" class="btn btn-success disabled" style="float: right;"><i class="fas fa-check-square"></i> Añadido al carrito</a>';
-              $verificar=0;
-              break;
+              if($producto->id==$id)
+              {
+                echo '<a id="add_item" type="button" class="btn btn-success disabled" style="float: right;"><i class="fas fa-check-square"></i> Añadido al carrito</a>';
+                $verificar=0;
+                break;
+              }
             }
-          }
-          if($verificar)
-          {
-            echo ' <a id="add_item" type="button" class="btn btn-success" style="float: right;"><i class="fas fa-cart-plus"></i> Añadir al carrito</a>';
-          }
-        @endphp
+            if($verificar)
+            {
+              echo ' <a id="add_item" type="button" class="btn btn-success" style="float: right;"><i class="fas fa-cart-plus"></i> Añadir al carrito</a>';
+            }
+          @endphp
+        @else
+          <a id="add_item" type="button" class="btn btn-danger disabled" style="float: right;"><i class="fas fa-times-circle"></i> Producto agotado</a>
+        @endif
       @else
         <a id="add_item" type="button" class="btn btn-primary" style="margin-bottom: 50px;" href="{{Route('login')}}"><i class="fas fa-sign-in-alt"></i> Inicia sesión para comprar</a>
 
@@ -42,6 +46,8 @@
       <h2>{{stripslashes(utf8_decode($producto->titulo))}}</h2>
       <h5>Marca: {{stripslashes(utf8_decode($producto->marca))}}</h5>
       <h5>Modelo: {{stripslashes(utf8_decode($producto->modelo))}}</h5>
+      <br>
+      <h5>Existencias: {{$producto->inventario}}</h5>
       <br>
       <h4 class="card-title">${{round($producto->costoMXN,2)}}</h4>
       <br>

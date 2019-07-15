@@ -93,6 +93,7 @@ class VentaController extends Controller
                 Session::forget('producto'.$value);
             }
         }
+        //return view('mails.Recibo',['venta'=>$venta]);
         $this->Nonextore($venta);
         return $this->show(Auth::User()->id);
     }
