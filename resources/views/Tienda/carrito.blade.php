@@ -20,18 +20,27 @@
 				<tbody>
 					@php
 						$total=0;
+						//dd();
 					@endphp
 					@foreach($productos as $p)
+						
 						<input type="hidden" name="id[]" value="{{$p->id}}">
 						<tr id="row{{$p->id}}">
 						  <th scope="row">{{stripslashes(utf8_decode($p->titulo))}}</th>
 						  <td><input id="costo{{$p->id}}" type="text" value="${{ round($p->costoMXN,2)}}" readonly="" style="width: 150px"></td>
-						  <td><input type="number" name="cantidad[]" id="{{$p->id}}" min="1" value="1" style="width: 75px;"></td>
-						  <td id="total{{$p->id}}">${{round($p->costoMXN,2)}}</td>
+						  <td><input type="number" name="cantidad[]" id="{{$p->id}}" min="1" max="{{Session::get('cantidadSeleccionada'.$p->id)>0?$p->inventario+Session::get('cantidadSeleccionada'.$p->id):$p->inventario+1}}" value="{{Session::get('cantidadSeleccionada'.$p->id)>0?Session::get('cantidadSeleccionada'.$p->id):1}}" style="width: 75px;"></td>
+						  <td id="total{{$p->id}}">${{Session::get('cantidadSeleccionada'.$p->id)>0?round($p->costoMXN,2)*Session::get('cantidadSeleccionada'.$p->id):round($p->costoMXN,2)}}</td>
 						  <td><a id="minus{{$p->id}}"><i class="fas fa-minus-circle" style="color:red;"></i></a></td>
 						</tr>
 						@php
+						if(Session::get('cantidadSeleccionada'.$p->id)>0)
+						{
+							$total+=(($p->costoMXN)*Session::get('cantidadSeleccionada'.$p->id));
+						}
+						else
+						{
 							$total+=$p->costoMXN;
+						}
 						@endphp
 					@endforeach
 					<tr>
@@ -63,20 +72,31 @@
 	$('input').change(function(){
 		var fila=$(this).attr('id');
 		var total=0;
-		//alert();
+		var cantidad=-1*(parseInt(this.value)-parseInt(this.defaultValue));
 		$.ajax({
-	        type: "GET",
-	        url: '{{url("/convert_c")}}'+'/'+fila,
+	        type: "POST",
+	        url: '{{url("/convert_c")}}',
+	        data:{id:fila,cantidad:cantidad,numU:this.value},
 	        success: function(res){
-	        	$('#total'+fila).html((parseFloat($('#'+fila).val())*res).toFixed(2));
-	        	$('[id^=total]').each(function(index){
-	        		//console.log($(this).html())
-	        		total+=parseFloat($(this).html().replace('$',''));
-	        	});
-	        	//console.log(total);
-	        	$('#Ftotal').html('$'+total.toFixed(2));
+	        	if(res.status)
+	        	{
+	        		$('#total'+fila).html('$'+(parseFloat($('#'+fila).val())*res.costo).toFixed(2));
+		        	$('[id^=total]').each(function(index){
+		        		//console.log($(this).html())
+		        		total+=parseFloat($(this).html().replace('$',''));
+		        	});
+		        	//console.log(total);
+		        	$('#Ftotal').html('$'+total.toFixed(2));
+	        	}
+	        	else
+	        	{
+	        		swal("Existencias insuficientes", "¡No disponemos de las existencias suficientes!", "error");
+	        		$(this).val(this.defaultValue);
+	        	}
+		        	
 	        },
 	    });
+	    this.defaultValue = this.value;
 			
 	});
 </script>

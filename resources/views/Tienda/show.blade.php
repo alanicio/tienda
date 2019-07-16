@@ -84,10 +84,17 @@
     $.ajax({
         type: "GET",
         url: '{{url("/add_producto","$producto->id")}}',
-        success: function(){
-          $('#add_item').attr('class','btn btn-success disabled');
-          $('#add_item').html('<i class="fas fa-check-square"></i> Añadido al carrito');
-          //$("i").attr('class','fas fa-check-square');
+        success: function(res){
+          if(res>0)
+          {
+            $('#add_item').attr('class','btn btn-success disabled');
+            $('#add_item').html('<i class="fas fa-check-square"></i> Añadido al carrito');
+          }
+          else
+          {
+            swal("Se acaban de terminar existencias!", "los sentimos, acaban de seleccionar las ultimas existencias de este producto", "error");
+             location.reload();
+          }
         },
     });
   });

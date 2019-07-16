@@ -23,7 +23,7 @@ Route::get('cargar_categorias','Producto\CategoriaController@CargarCategorias');
 Route::get('search','Producto\ProductoController@Buscar');
 Route::get('add_producto/{id}','Venta\VentaController@AddCarrito');
 Route::get('quitar_carrito/{id}','Venta\VentaController@RmCarrito');
-Route::get('convert_c/{id}','Venta\VentaController@ConvertC');
+Route::post('convert_c','Venta\VentaController@ConvertC');
 
 Route::resource('ventas','Venta\VentaController');
 Route::resource('tienda','Producto\ProductoController');

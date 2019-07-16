@@ -43,7 +43,15 @@ class VentaController extends Controller
      */
     public function create()
     {
-        return view('Tienda.carrito',['productos'=>Producto::findMany(array_slice(Session::all(), 4))]);
+        $ids=[];
+        foreach (Session::all() as $key => $value) {
+            if(strpos($key,'roducto'))
+            {
+                $ids[]=$value;
+            }
+        }
+        //dd($ids);
+        return view('Tienda.carrito',['productos'=>Producto::findMany($ids)]);
     }
 
     /**
@@ -91,6 +99,14 @@ class VentaController extends Controller
             if(strpos($key,'roducto'))
             {
                 Session::forget('producto'.$value);
+            }
+            if(strpos($key,'Original'))
+            {
+                Session::forget('cantidadOriginal'.$value);
+            }
+            if(strpos($key,'Seleccionada'))
+            {
+                Session::forget('cantidadSeleccionada'.$value);
             }
         }
         //return view('mails.Recibo',['venta'=>$venta]);
@@ -152,17 +168,62 @@ class VentaController extends Controller
 
     public function AddCarrito($id)
     {
-        Session::put('producto'.$id,$id);
+        $producto=Producto::find($id);
+        if($producto->inventario>0)
+        {
+            Session::put('producto'.$id,$id);
+            Session::put('cantidadOriginal'.$id,$producto->inventario);
+            $producto->inventario-=1;
+            $producto->update();
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
+            
     }
 
     public function RmCarrito($id)
     {
+        $producto=Producto::find($id);
+        $producto->inventario=Session::get('cantidadOriginal'.$id);
+        $producto->update();
         Session::forget('producto'.$id);
+        Session::forget('cantidadOriginal'.$id);
+        Session::forget('cantidadSeleccionada'.$id);
     }
 
-    public function ConvertC($id)
+    public function ConvertC(Request $request)
     {
-        $value=Producto::find($id);
-        return $value->costoMXN;
+        session_start();
+        $producto=Producto::find($request->id);
+        if((-1*($request->cantidad))<0)
+        {
+            $producto->inventario+=$request->cantidad;
+            $producto->update();
+            $resul=[
+                'status'=>1,
+                'costo'=>$producto->costoMXN,
+                'inventario'=>$producto->inventario,
+                ];
+        }
+        else
+        {
+            if(($request->cantidad*-1)>$producto->inventario+1)
+                $resul=['status'=>0];
+            else
+            {
+                $producto->inventario+=$request->cantidad;
+                $producto->update();
+                $resul=[
+                    'status'=>1,
+                    'costo'=>$producto->costoMXN,
+                    'inventario'=>$producto->inventario,
+                    ];
+            }
+        }
+        Session::put('cantidadSeleccionada'.$producto->id,$request->numU);
+        return response()->json($resul);
     }
 }

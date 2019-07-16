@@ -2,7 +2,6 @@
 <html lang="en">
 
 	<head>
-
 		<meta charset="utf-8">
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
 	    <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -12,6 +11,7 @@
 		<script src="/vendor/jquery/jquery.min.js"></script>
   		<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 		<link rel="stylesheet" href="{{ asset('css/app.css') }}">
+		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 		@yield('keywords')
 
 	  <title>Tienda NONEX</title>
@@ -24,6 +24,13 @@
 
 	  <!-- Custom styles for this template -->
 	  <link href="/css/shop-homepage.css" rel="stylesheet">
+	  <script type="text/javascript">
+	  	$.ajaxSetup({
+		  headers: {
+		    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+		  }
+		});
+	  </script>
 
 	</head>
 

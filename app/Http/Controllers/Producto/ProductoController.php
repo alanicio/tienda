@@ -370,7 +370,9 @@ class ProductoController extends Controller
         foreach ($productos as $key => $p) {
             $match=0;
             $titulo=str_replace(['/','-',' '],'-',utf8_decode($p->titulo));
+            $modelo=str_replace(['/','-',' '],'-',utf8_decode($p->modelo));
             $product=strtolower($this->LimpiarAcentos($titulo));
+            $$modelo=strtolower($this->LimpiarAcentos($modelo));
             foreach ($palabras as $palabra) {
                $palabra=strtolower($this->LimpiarAcentos($palabra));
                if ( preg_match("~\b".$palabra."\b~",$product) )
@@ -380,6 +382,10 @@ class ProductoController extends Controller
                if(strpos($product, $palabra)===0)
                {
                 $match++;
+               }
+               if ( preg_match("~\b".$palabra."\b~",$modelo) )
+               {
+                $match+=200;
                }
            }
            $matchResul[]=$match;
