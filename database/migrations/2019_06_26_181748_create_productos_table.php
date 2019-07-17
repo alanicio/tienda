@@ -27,6 +27,8 @@ class CreateProductosTable extends Migration
             $table->foreign('categoria_id')->references('id')->on('categorias');
             $table->integer('inventario');
             $table->timestamps();
+
+            $table->index(['modelo', 'marca', 'titulo']); 
         });
     }
 

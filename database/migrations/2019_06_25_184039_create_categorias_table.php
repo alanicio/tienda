@@ -19,6 +19,8 @@ class CreateCategoriasTable extends Migration
             $table->integer('categoria_padre')->unsigned()->nullable();
             $table->integer('nivel');
             $table->foreign('categoria_padre')->references('id')->on('categorias');
+
+            $table->index(['nombre', 'nivel', 'categoria_padre']); 
             $table->timestamps();
         });
     }
