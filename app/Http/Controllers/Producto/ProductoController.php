@@ -335,7 +335,15 @@ class ProductoController extends Controller
                     if($producto=Producto::where('modelo',utf8_encode($datos[0]))->first())
                     {
                         $producto->costoUSD=$datos[5];
-                        $producto->costoMXN=($datos[5]*$datos[11]);
+                        if(strpos($producto->titulo, 'NVR')!== false || strpos($producto->titulo, 'DVR')!== false)
+                        {
+                            $producto->costoMXN=($datos[5]*$datos[11])*2;
+                        }
+                        else
+                        {
+                            $producto->costoMXN=($datos[5]*$datos[11])*1.3;
+                        }
+                        
                         $producto->inventario=$datos[6];
                         $producto->update();
                         echo 'fila '.$fila.' tardo '.(microtime(true)-$start).'<br>';

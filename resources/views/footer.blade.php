@@ -1,7 +1,24 @@
 <!-- Footer -->
-  <footer class="py-5 bg-dark" style="margin-top: 50px">
-    <div class="container">
-      <p class="m-0 text-center text-white">Copyright &copy; Your Website 2019</p>
-    </div>
+  <footer class="py-5 bg-white" style="margin-top: 50px">
+  	<img src="{{asset('imgs/raya_azul.png')}}" class="img-fluid" style="width: 100%">
+  	
+	
+	
+	
+
+	<div>
+		<img src="{{asset('imgs/datos.png')}}" class="img-fluid" style="float: left;">
+		<img src="{{asset('imgs/nonex_logo.png')}}" class="img-fluid" style="float: right;margin-top: 40px;margin-right: 30px;">
+		<p class="text-center" style="margin-top: 50px;">
+			www.sistemasnonex.com/blog<br>
+		www.sistemasnonex.com<br>
+		(0155) 2978-4919<br>
+		ventas@sistemasnonex.com<br>
+		</p>
+
+
+	</div>
+  	
+	  	
     <!-- /.container -->
   </footer>
