@@ -15,7 +15,7 @@
 <div class="col-lg-9">
 
   <div class="card mt-4">
-    <img class="card-img-top img-fluid" src="{{$producto->imagen}}" alt="">
+    <img class="card-img-top img-fluid" src="{{strlen($producto->imagen)?$producto->imagen:asset('imgs/not_found.jpeg')}}" alt="">
     <div class="card-body">
       @if(Auth::check())
         @if($producto->inventario>0)

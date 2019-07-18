@@ -4,7 +4,7 @@
 @endphp
 <div class="col-lg-3">
 
-  <h1 class="my-4">Tienda nonex</h1>
+  <h1 class="my-4"><a href="/"><img src="{{asset('imgs/Prototipo/logo.png')}}" style="width: 250px;"></a></h1>
   <div class="list-group">
   	<div id="accordion">
 	  	@foreach($categorias1 as $c)

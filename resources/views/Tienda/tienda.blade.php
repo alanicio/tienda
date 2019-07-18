@@ -13,12 +13,13 @@
       <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
       <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
     </ol>
+    <!-- 900x350 imagenes del slider -->
     <div class="carousel-inner" role="listbox">
       <div class="carousel-item active">
-        <img class="d-block img-fluid" src="http://placehold.it/900x350" alt="First slide">
+        <img class="d-block img-fluid" src="{{asset('imgs/Prototipo/banner1.png')}}" alt="First slide">
       </div>
       <div class="carousel-item">
-        <img class="d-block img-fluid" src="http://placehold.it/900x350" alt="Second slide">
+        <img class="d-block img-fluid" src="{{asset('imgs/Prototipo/banner2.jpeg')}}" alt="Second slide" style="width: 900px;height: 350px;">
       </div>
       <div class="carousel-item">
         <img class="d-block img-fluid" src="http://placehold.it/900x350" alt="Third slide">
@@ -43,10 +44,10 @@
          <!--  <a href="{{route('tienda.show',['id'=>$p->id])}}"><img class="card-img-top" src="{{strlen($p->imagen)?$p->imagen:asset('imgs/not_found.jpeg')}}" alt=""></a> -->
          @php
             if(isset($p->categoria))
-              $categoria=str_replace(['/',' '],'-',$p->categoria->nombre);
-            $titulo=str_replace(['/','-',' '],'-',utf8_decode($p->titulo));
-            $marca=str_replace(['/','-',' '],'-',utf8_decode($p->marca));
-            $modelo=str_replace(['/','-',' '],'',utf8_decode($p->modelo));
+              $categoria=stripslashes(str_replace(['/',' '],'-',$p->categoria->nombre));
+            $titulo=stripslashes(str_replace(['/','-',' '],'-',utf8_decode($p->titulo)));
+            $marca=stripslashes(str_replace(['/','-',' '],'-',utf8_decode($p->marca)));
+            $modelo=stripslashes(str_replace(['/','-',' '],'',utf8_decode($p->modelo)));
          @endphp
           <a href="{{isset($p->categoria)?url('/'.$categoria.'/'.$p->id.'-'.$titulo.'-'.$marca.'-'.$modelo):url('/otros/'.$p->id.'-'.$titulo.'-'.$marca.'-'.$modelo)}}"><img class="card-img-top" src="{{strlen($p->imagen)?$p->imagen:asset('imgs/not_found.jpeg')}}" alt=""></a>
           <div class="card-body">
@@ -64,9 +65,9 @@
             @endif
             Existencias: {{$p->inventario}}
           </div>
-          <div class="card-footer">
+          <!-- <div class="card-footer">
             <small class="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
-          </div>
+          </div> -->
         </div>
       </div>
     @endforeach

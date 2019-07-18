@@ -345,6 +345,7 @@ class ProductoController extends Controller
                         }
                         
                         $producto->inventario=$datos[6];
+                        $producto->imagen=$datos[10];
                         $producto->update();
                         echo 'fila '.$fila.' tardo '.(microtime(true)-$start).'<br>';
                         //dd(microtime(true)-$start);

@@ -7,8 +7,8 @@
 	
 
 	<div>
-		<img src="{{asset('imgs/datos.png')}}" class="img-fluid" style="float: left;">
-		<img src="{{asset('imgs/nonex_logo.png')}}" class="img-fluid" style="float: right;margin-top: 40px;margin-right: 30px;">
+		<img src="{{asset('imgs/datos.png')}}" class="img-fluid" style="float: right;width: 25%;">
+		<img src="{{asset('imgs/nonex_logo.png')}}" class="img-fluid" style="float: left;width: 30%;">
 		<p class="text-center" style="margin-top: 50px;">
 			www.sistemasnonex.com/blog<br>
 		www.sistemasnonex.com<br>
