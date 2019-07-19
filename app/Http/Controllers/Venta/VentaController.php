@@ -198,7 +198,7 @@ class VentaController extends Controller
     {
         session_start();
         $producto=Producto::find($request->id);
-        if((-1*($request->cantidad))<0)
+        if($request->numU<=Session::get('cantidadOriginal'.$request->id) && $request->numU>0)
         {
             $producto->inventario+=$request->cantidad;
             $producto->update();
@@ -207,23 +207,14 @@ class VentaController extends Controller
                 'costo'=>$producto->costoMXN,
                 'inventario'=>$producto->inventario,
                 ];
+            Session::put('cantidadSeleccionada'.$producto->id,$request->numU);
         }
         else
         {
-            if(($request->cantidad*-1)>$producto->inventario+1)
-                $resul=['status'=>0];
-            else
-            {
-                $producto->inventario+=$request->cantidad;
-                $producto->update();
-                $resul=[
-                    'status'=>1,
-                    'costo'=>$producto->costoMXN,
-                    'inventario'=>$producto->inventario,
-                    ];
-            }
+                $resul=['status'=>0,
+                        'value'=>$request->numU+$request->cantidad];
         }
-        Session::put('cantidadSeleccionada'.$producto->id,$request->numU);
+        
         return response()->json($resul);
     }
 }

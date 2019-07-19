@@ -87,16 +87,17 @@
 		        	});
 		        	//console.log(total);
 		        	$('#Ftotal').html('$'+total.toFixed(2));
+		        	 this.defaultValue = this.value;
 	        	}
 	        	else
 	        	{
 	        		swal("Existencias insuficientes", "¡No disponemos de las existencias suficientes!", "error");
-	        		$(this).val(this.defaultValue);
+	        		console.log(res.value);
+	        		$('#'+fila).val(parseInt(res.value ));
 	        	}
 		        	
 	        },
 	    });
-	    this.defaultValue = this.value;
 			
 	});
 </script>
