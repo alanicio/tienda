@@ -24,6 +24,7 @@
   <link href="/css/shop-homepage.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="{{asset('css/parallax.css')}}">
   <link href="/font/gotham/gotham-font.css" rel="stylesheet">
+  <link href="/css/fuentes.css" rel="stylesheet">
 </head>
 <body>
   @include('nav')

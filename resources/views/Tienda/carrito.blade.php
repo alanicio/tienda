@@ -69,10 +69,13 @@
 
 	});
 
+
 	$('input').change(function(){
+		console.log(this.defaultValue);
 		var fila=$(this).attr('id');
 		var total=0;
 		var cantidad=-1*(parseInt(this.value)-parseInt(this.defaultValue));
+		this.defaultValue=this.value;
 		$.ajax({
 	        type: "POST",
 	        url: '{{url("/convert_c")}}',
@@ -87,18 +90,26 @@
 		        	});
 		        	//console.log(total);
 		        	$('#Ftotal').html('$'+total.toFixed(2));
-		        	 this.defaultValue = this.value;
+		        	$('#'+fila).defaultValue=$('#'+fila).value;
+		        	 
 	        	}
 	        	else
 	        	{
-	        		swal("Existencias insuficientes", "¡No disponemos de las existencias suficientes!", "error");
-	        		console.log(res.value);
-	        		$('#'+fila).val(parseInt(res.value ));
+	        		$('#'+fila).attr('readonly', true);
+	        		swal("Existencias insuficientes", "¡No disponemos de las existencias suficientes!", "error")
+					.then((value) => {
+					  location.reload(true);
+					});
+	        		// swal("Existencias insuficientes", "¡No disponemos de las existencias suficientes!", "error");
+	       //  		setTimeout(function(){
+				    //     location.reload(true);
+				    // }, 2000);
+	        		
 	        	}
+
 		        	
 	        },
 	    });
-			
 	});
 </script>
 @endsection

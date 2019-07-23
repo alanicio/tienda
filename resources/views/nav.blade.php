@@ -1,7 +1,7 @@
   <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color:  #598ada;">
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top" style="background-color:  #1D334C;">
     <div class="container">
-      <a class="navbar-brand" href="/">NONEXTORE</a>
+      <a class="navbar-brand" href="/"><img src="{{asset('imgs/inicio/fuente.png')}}" style="width: 150px;"></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
