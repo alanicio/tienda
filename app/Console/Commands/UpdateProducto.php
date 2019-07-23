@@ -63,7 +63,14 @@ class UpdateProducto extends Command
                     break;
                 case 5:
                         $producto->costoUSD=$datos[$c];
-                        $producto->costoMXN=($datos[$c]*$datos[11]);
+                        if(strpos($producto->titulo, 'NVR')!== false || strpos($producto->titulo, 'DVR')!== false)
+                        {
+                            $producto->costoMXN=(($datos[5]*$datos[11])*2)*1.16;
+                        }
+                        else
+                        {
+                            $producto->costoMXN=(($datos[5]*$datos[11])*1.3)*1.16;
+                        }
                         break;
                 case 6:
                         $producto->inventario=$datos[$c];
@@ -126,11 +133,11 @@ class UpdateProducto extends Command
                         $producto->costoUSD=$datos[5];
                         if(strpos($producto->titulo, 'NVR')!== false || strpos($producto->titulo, 'DVR')!== false)
                         {
-                            $producto->costoMXN=($datos[5]*$datos[11])*2;
+                            $producto->costoMXN=(($datos[5]*$datos[11])*2)*1.16;
                         }
                         else
                         {
-                            $producto->costoMXN=($datos[5]*$datos[11])*1.3;
+                            $producto->costoMXN=(($datos[5]*$datos[11])*1.3)*1.16;
                         }
                         
                         $producto->inventario=$datos[6];

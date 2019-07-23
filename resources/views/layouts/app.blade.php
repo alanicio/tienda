@@ -22,18 +22,16 @@
 
   <!-- Custom styles for this template -->
   <link href="/css/shop-homepage.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="{{asset('css/parallax.css')}}">
+  <link href="/font/gotham/gotham-font.css" rel="stylesheet">
 </head>
 <body>
-    <div id="app">
-        @include('nav')
-
-        <main class="py-4">
-            @yield('content')
-        </main>
-    </div>
-    <div>
-      @include('footer')
-    </div>
-    
+  @include('nav')
+  <div class="content">
+    @yield('content')
+  </div>
+  
+  @include('footer')
+  
 </body>
 </html>

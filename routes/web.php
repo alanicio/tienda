@@ -18,7 +18,7 @@ Route::get('/', function () {
 
 // Route::get('cargar_datos','Producto\ProductoController@CargarDatos');
 // Route::get('cargar_productos','Producto\ProductoController@ActualizarProductos');
-// Route::get('cargar_categorias','Producto\CategoriaController@CargarCategorias');
+Route::get('cargar_categorias','Producto\CategoriaController@CargarCategorias');
 
 Route::get('search','Producto\ProductoController@Buscar');
 Route::get('add_producto/{id}','Venta\VentaController@AddCarrito');

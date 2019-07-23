@@ -1,0 +1,41 @@
+.content{
+	padding-bottom: 0px;
+}
+
+h3{
+	font-family:'Gotham Bold'
+}
+
+section{
+	background-attachment: fixed;
+	background-position: center;
+	background-repeat: no-repeat;
+	margin: 0;
+	padding: 0;
+}
+
+.bloque1{
+	/*Imagen de fondo*/
+	background-image: url('/imgs/inicio/banner1.png');
+
+	/* Set a specific height */
+ 	min-height: 600px; 
+
+	/* Create the parallax scrolling effect */
+	
+	background-size: auto 85%;
+}
+
+.bloque2{
+	background-image: url('/imgs/inicio/fondo-01.png');
+	background-size: auto 100%;
+	min-height: 600px;
+}
+
+
+
+.bloque4{
+	background-image: url('/imgs/inicio/familia.png');
+	background-size: 100%;
+	min-height: 900px;
+}

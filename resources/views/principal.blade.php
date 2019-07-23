@@ -24,6 +24,7 @@
 
 	  <!-- Custom styles for this template -->
 	  <link href="/css/shop-homepage.css" rel="stylesheet">
+	  <link href="/font/gotham/gotham-font.css" rel="stylesheet">
 	  <script type="text/javascript">
 	  	$.ajaxSetup({
 		  headers: {
