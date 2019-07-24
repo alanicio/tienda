@@ -44,10 +44,18 @@
          <!--  <a href="{{route('tienda.show',['id'=>$p->id])}}"><img class="card-img-top" src="{{strlen($p->imagen)?$p->imagen:asset('imgs/not_found.jpeg')}}" alt=""></a> -->
          @php
             if(isset($p->categoria))
+            {
               $categoria=stripslashes(str_replace(['/',' '],'-',$p->categoria->nombre));
+              $categoria = preg_replace('~-{2,}~', '-', $categoria);
+            }
             $titulo=stripslashes(str_replace(['/','-',' '],'-',utf8_decode($p->titulo)));
+            $titulo = preg_replace('~-{2,}~', '-', $titulo);
             $marca=stripslashes(str_replace(['/','-',' '],'-',utf8_decode($p->marca)));
+            $marca = preg_replace('~-{2,}~', '-', $marca);
             $modelo=stripslashes(str_replace(['/','-',' '],'',utf8_decode($p->modelo)));
+            $modelo = preg_replace('~-{2,}~', '-', $modelo);
+
+
          @endphp
           <a href="{{isset($p->categoria)?url('/'.$categoria.'/'.$p->id.'-'.$titulo.'-'.$marca.'-'.$modelo):url('/otros/'.$p->id.'-'.$titulo.'-'.$marca.'-'.$modelo)}}"><img class="card-img-top" src="{{strlen($p->imagen)?$p->imagen:asset('imgs/not_found.jpeg')}}" alt=""></a>
           <div class="card-body">
