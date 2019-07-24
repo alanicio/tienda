@@ -28,7 +28,7 @@
 						<tr id="row{{$p->id}}">
 						  <th scope="row">{{stripslashes(utf8_decode($p->titulo))}}</th>
 						  <td><input id="costo{{$p->id}}" type="text" value="${{ round($p->costoMXN,2)}}" readonly="" style="width: 150px"></td>
-						  <td><input type="number" name="cantidad[]" id="{{$p->id}}" min="1" max="{{Session::get('cantidadSeleccionada'.$p->id)>0?$p->inventario+Session::get('cantidadSeleccionada'.$p->id):$p->inventario+1}}" value="{{Session::get('cantidadSeleccionada'.$p->id)>0?Session::get('cantidadSeleccionada'.$p->id):1}}" style="width: 75px;"></td>
+						  <td><input type="number" name="cantidad[]" id="{{$p->id}}" min="1" value="{{Session::get('cantidadSeleccionada'.$p->id)>0?Session::get('cantidadSeleccionada'.$p->id):1}}" style="width: 75px;"></td>
 						  <td id="total{{$p->id}}">${{Session::get('cantidadSeleccionada'.$p->id)>0?round($p->costoMXN,2)*Session::get('cantidadSeleccionada'.$p->id):round($p->costoMXN,2)}}</td>
 						  <td><a id="minus{{$p->id}}"><i class="fas fa-minus-circle" style="color:red;"></i></a></td>
 						</tr>

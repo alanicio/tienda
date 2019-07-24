@@ -16,9 +16,12 @@
 			    </tr>
 			  </thead>
 			  <tbody>
+			  	@php
+			  		$n=1;
+			  	@endphp
 			  	@foreach($ventas as $venta)
 			  		<tr>
-				      <th scope="row">{{$venta->id}}</th>
+				      <th scope="row">{{$n++}}</th>
 				      <td>{{$venta->created_at->format('d/m/Y')}}</td>
 				      <td>${{round($venta->totalMXN,2)}}</td>
 				      <td><i class="clickable far fa-arrow-alt-circle-down" data-toggle="collapse" data-target="#accordionV{{$venta->id}}"></i></td>

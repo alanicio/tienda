@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Currency;
 use App\Mail\ReciboDeCompra;
 use Mail;
+use Artisan;
 
 class VentaController extends Controller
 {
@@ -74,6 +75,14 @@ class VentaController extends Controller
             //dd('no esta logueado');
             return redirect('/login');
         }
+        //dd(Session::get('cantidadSeleccionada'.$value);
+        foreach ($request->id as $key => $value) {
+            if((Session::get('cantidadSeleccionada'.$value)+Producto::find($value)->inventario)<$request->cantidad[$key])
+            {
+                return $this->create();
+            }
+            //if(Producto::find($value))
+        }
         $productos=Producto::findMany($request->id);
         $totalMXN=0;
         $totalUSD=0;
@@ -99,16 +108,11 @@ class VentaController extends Controller
             if(strpos($key,'roducto'))
             {
                 Session::forget('producto'.$value);
-            }
-            if(strpos($key,'Original'))
-            {
                 Session::forget('cantidadOriginal'.$value);
-            }
-            if(strpos($key,'Seleccionada'))
-            {
                 Session::forget('cantidadSeleccionada'.$value);
             }
         }
+        //dd(Session::all());
         //return view('mails.Recibo',['venta'=>$venta]);
         $this->Nonextore($venta);
         return $this->show(Auth::User()->id);
@@ -173,6 +177,7 @@ class VentaController extends Controller
         {
             Session::put('producto'.$id,$id);
             Session::put('cantidadOriginal'.$id,$producto->inventario);
+            Session::put('cantidadSeleccionada'.$id,1);
             $producto->inventario-=1;
             $producto->update();
             return 1;
@@ -187,7 +192,7 @@ class VentaController extends Controller
     public function RmCarrito($id)
     {
         $producto=Producto::find($id);
-        $producto->inventario=Session::get('cantidadOriginal'.$id);
+        $producto->inventario+=Session::get('cantidadSeleccionada'.$id);
         $producto->update();
         Session::forget('producto'.$id);
         Session::forget('cantidadOriginal'.$id);
@@ -198,9 +203,10 @@ class VentaController extends Controller
     {
         session_start();
         $producto=Producto::find($request->id);
-        if($request->numU<=Session::get('cantidadOriginal'.$request->id) && $request->numU>0)
+        $producto->inventario+=$request->cantidad;
+        if($producto->inventario>=0 && $request->numU>0)
         {
-            $producto->inventario+=$request->cantidad;
+            
             $producto->update();
             $resul=[
                 'status'=>1,
@@ -208,11 +214,12 @@ class VentaController extends Controller
                 'inventario'=>$producto->inventario,
                 ];
             Session::put('cantidadSeleccionada'.$producto->id,$request->numU);
+             
         }
         else
         {
-                $resul=['status'=>0,
-                        'value'=>$request->numU+$request->cantidad];
+            $resul=['status'=>0,
+                    'value'=>$request->numU+$request->cantidad];
         }
         
         return response()->json($resul);
