@@ -28,10 +28,7 @@
 </head>
 <body>
   @include('nav')
-  <div class="content">
-    @yield('content')
-  </div>
-  
+  @yield('content')
   @include('footer')
   
 </body>

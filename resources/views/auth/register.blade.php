@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container" style="margin: 75px;">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
@@ -74,4 +74,11 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+    $('#inicio').prop("class","nav-item");
+    $('#tienda').prop("class","nav-item");
+    $('#carrito').prop("class","nav-item");
+    $('#usuario').prop("class","nav-item dropdown");
+    $('#sesion').prop("class","nav-item dropdown active");
+</script>
 @endsection

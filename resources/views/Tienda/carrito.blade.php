@@ -49,10 +49,21 @@
 					</tr>
 				</tbody>
 			</table>
-			<input type="submit" value="Concretar compra">
+			@if($productos->count())
+				<input type="submit" value="Concretar compra">
+			@endisset
 		</form>
   </div>
 </div>
+
+<script type="text/javascript">
+	$('#inicio').prop("class","nav-item");
+	$('#tienda').prop("class","nav-item");
+	$('#carrito').prop("class","nav-item active");
+	$('#usuario').prop("class","nav-item dropdown");
+	$('#sesion').prop("class","nav-item dropdown");
+</script>
+
 <script type="text/javascript">
 	$('a').click(function(){
 		var row=$(this).attr('id').substring(5);

@@ -16,13 +16,13 @@
     <!-- 900x350 imagenes del slider -->
     <div class="carousel-inner" role="listbox">
       <div class="carousel-item active">
-        <img class="d-block img-fluid" src="{{asset('imgs/Prototipo/banner1.png')}}" alt="First slide">
+        <img class="d-block img-fluid" src="{{asset('imgs/banner/banner1.png')}}" alt="First slide" style="width: 900px;height: 350px;">
       </div>
       <div class="carousel-item">
-        <img class="d-block img-fluid" src="{{asset('imgs/Prototipo/banner2.jpeg')}}" alt="Second slide" style="width: 900px;height: 350px;">
+        <img class="d-block img-fluid" src="{{asset('imgs/banner/banner2.png')}}" alt="Second slide" style="width: 900px;height: 350px;">
       </div>
       <div class="carousel-item">
-        <img class="d-block img-fluid" src="http://placehold.it/900x350" alt="Third slide">
+        <img class="d-block img-fluid" src="{{asset('imgs/banner/banner3.png')}}" alt="Third slide" style="width: 900px;height: 350px;">
       </div>
     </div>
     <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
@@ -88,6 +88,12 @@
 <!-- /.col-lg-9 -->
 
 
-
+<script type="text/javascript">
+  $('#inicio').prop("class","nav-item");
+  $('#tienda').prop("class","nav-item active");
+  $('#carrito').prop("class","nav-item");
+  $('#usuario').prop("class","nav-item dropdown");
+  $('#sesion').prop("class","nav-item dropdown");
+</script>
 
 @endsection

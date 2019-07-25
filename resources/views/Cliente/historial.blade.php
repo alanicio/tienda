@@ -75,5 +75,11 @@
         </tr>
     </tbody>
 </table> -->
-		
+<script type="text/javascript">
+	$('#inicio').prop("class","nav-item");
+	$('#tienda').prop("class","nav-item");
+	$('#carrito').prop("class","nav-item");
+	$('#usuario').prop("class","nav-item dropdown active");
+	$('#sesion').prop("class","nav-item dropdown");
+</script>
 @endsection
