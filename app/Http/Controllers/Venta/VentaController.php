@@ -13,6 +13,7 @@ use App\productos_ventas;
 use Illuminate\Support\Facades\Auth;
 use Currency;
 use App\Mail\ReciboDeCompra;
+use App\Mail\AtencionAlCliente;
 use Mail;
 use Artisan;
 
@@ -168,6 +169,11 @@ class VentaController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function AtencionAlCliente(Request $request)
+    {
+        dd($request->all());
     }
 
     public function AddCarrito($id)

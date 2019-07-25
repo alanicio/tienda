@@ -3,7 +3,7 @@
   <footer style="background-color: #1D334C;background-size: 200%;">
   	<div class="text-center">
   		<a href=" https://www.sistemasnonex.com/" target="_blank"><img src="{{asset('imgs/footer/internet.png')}}" style="width: 40px;margin-left: 6px;"></a>
-	  	<img src="{{asset('imgs/footer/mail.png')}}" style="width: 30px;margin-left: 6px;">
+	  	<a href="{{url('contacto')}}"><img src="{{asset('imgs/footer/mail.png')}}" style="width: 30px;margin-left: 6px;"></a>
 	  	<a href="https://www.sistemasnonex.com/blog/" target="_blank"><img src="{{asset('imgs/footer/blog.png')}}" style="margin-left: 6px;"></a>
 	  	<a href="https://www.facebook.com/sistemas.nonex/" target="_blank"><img src="{{asset('imgs/footer/facebook.png')}}"></a>
   	</div>

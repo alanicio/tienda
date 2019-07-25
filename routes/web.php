@@ -16,6 +16,11 @@ Route::get('/', function () {
     return view('inicio');
 });
 
+Route::get('contacto',function(){
+	return view('Cliente.contacto');
+});
+
+Route::post('atencion_cliente','Cliente\AtencionClienteController@contacto')->name('contacto');
 // Route::get('cargar_datos','Producto\ProductoController@CargarDatos');
 // Route::get('cargar_productos','Producto\ProductoController@ActualizarProductos');
 Route::get('cargar_categorias','Producto\CategoriaController@CargarCategorias');

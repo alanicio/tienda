@@ -51,10 +51,11 @@
             </li>
           @else
             <li class="nav-item dropdown" id="sesion">
-              <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">SESIÓN</a>
+              <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">INCIAR SESIÓN</a>
               <div class="dropdown-menu">
-                <a class="dropdown-item" href="{{Route('login')}}">INICIAR SESIÓN</a>
-                <a class="dropdown-item" href="{{Route('register')}}">REGISTRARSE</a>       
+                <a class="dropdown-item" href="{{Route('register')}}">REGISTRARSE</a>
+                <a class="dropdown-item" href="{{Route('login')}}">MI CUENTA</a>
+                       
               </div>
             </li>
 
