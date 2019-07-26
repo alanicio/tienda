@@ -16,9 +16,10 @@ class AtencionAlCliente extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public $datos;
+    public function __construct($datos)
     {
-        //
+        $this->datos=$datos;
     }
 
     /**
@@ -28,6 +29,6 @@ class AtencionAlCliente extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name');
+        return $this->view('mails.atencion_cliente');
     }
 }

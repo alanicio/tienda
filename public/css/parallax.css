@@ -1,3 +1,12 @@
+p,h3,h2{
+		color: white;
+		font-family:'Gotham Bold';
+}
+
+h3{
+	font-size: 25px;
+}
+
 p{
 	text-align: justify;
 	text-justify: inter-word;
@@ -7,13 +16,9 @@ p{
 	padding-bottom: 0px;
 }
 
-h3,h2{
-	font-family:'Gotham Bold'
-}
-
 section{
 	background-attachment: fixed;
-	background-position: center;
+	/*background-position: center bottom;*/
 	background-repeat: no-repeat;
 	margin: 0;
 	padding: 0;
@@ -22,13 +27,12 @@ section{
 .bloque1{
 	/*Imagen de fondo*/
 	background-image: url('/imgs/inicio/bloque1.png');
-
 	/* Set a specific height */
  	min-height: 620px; 
 
 	/* Create the parallax scrolling effect */
 	
-	background-size: auto 100%;
+	background-size: cover cover;
 }
 
 .bloque2{
@@ -45,7 +49,89 @@ section{
 
 
 .bloque4{
-	background-image: url('/imgs/inicio/fondo4.png');
-	background-size: 130%;
-	min-height: 612px;
+	background-image: url('/imgs/inicio/bloque4.png');
+	background-size: 90%;
+	min-height: 700px;
+	background-position: 90% bottom;
+	/*background-position: auto 20;*/
+}
+/*Celulares*/
+@media only screen and (max-width: 700px)
+{
+	section{
+		background-attachment: scroll;
+	}
+	.bloque1{
+		min-height: 180px; 
+ 		background-position: center 0;
+ 		background-size: auto 180px;
+	}
+
+
+	.bloque4{
+		min-height: 120px;
+	}
+	p,h3,h2{
+			color: white;
+			font-family:'Gotham Bold';
+	}
+
+	h3{
+		font-size: 25px;
+	}
+
+	p{
+		font-size: 2px;
+	}
+}
+/*compu de escritorio baja resolucion*/
+@media only screen and (min-width: 768px)
+{
+	.bloque1{
+		/*Imagen de fondo*/
+	background-image: url('/imgs/inicio/bloque1.png');
+	/* Set a specific height */
+ 	min-height: 700px; 
+ 	background-position: center bottom;
+
+	/* Create the parallax scrolling effect */
+	
+	background-size: auto 570px;
+	}
+}
+
+/*compu escritorio ALTA RESOLUCION*/
+@media only screen and (min-width: 1400px)
+{
+	.bloque1{
+		/*Imagen de fondo*/
+	background-image: url('/imgs/inicio/bloque1.png');
+	/* Set a specific height */
+ 	min-height: 850px; 
+ 	background-position: center center;
+
+	/* Create the parallax scrolling effect */
+	
+	background-size: auto 740px;
+	}
+
+	.bloque2{
+	/* Set a specific height */
+ 	min-height: 850px; 
+ 	background-position: center center;
+
+	/* Create the parallax scrolling effect */
+	
+	background-size: auto 1010px;
+	}
+
+	.bloque3{
+	/* Set a specific height */
+ 	min-height: 850px; 
+ 	background-position: center center;
+
+	/* Create the parallax scrolling effect */
+	
+	background-size: auto 1010px;
+	}
 }

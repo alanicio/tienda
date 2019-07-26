@@ -13,7 +13,6 @@ use App\productos_ventas;
 use Illuminate\Support\Facades\Auth;
 use Currency;
 use App\Mail\ReciboDeCompra;
-use App\Mail\AtencionAlCliente;
 use Mail;
 use Artisan;
 

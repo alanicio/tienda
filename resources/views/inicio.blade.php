@@ -1,24 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<style type="text/css">
-	p,h3,h2{
-		color: white;
-	}
-	h3{
-		font-size: 25px;
-	}
-	p{
-		text-align: justify;
-  		/*text-justify: inter-word;*/
-	}
-</style>
-
-<section class="bloque1">
-	<!-- <div style="text-align: center;margin-top: 50px;">
-		<p style="color: white;text-shadow: 1px 0 10px  #ff8700;font-family:'Gotham Bold';font-size: 40px;top: 300px;" >SOLUCIÓN A PROBLEMAS EN MATERIA DE TECNOLOGÍA</p>
-	</div> -->
-</section>
+<section class="bloque1"></section>
 
 <section class="bloque2">
 	<div style="margin-left: 5%;">
@@ -63,9 +46,8 @@
 
 <section class="bloque4">
 	<div>
-		<img src="{{asset('imgs/inicio/familia.png')}}" style="float: right;height: ">
+		<img src="{{asset('imgs/inicio/familia.png')}}" style="float: right;visibility: hidden;">
 		<div style="display: table-cell; width: 800px;height: 500px;font-size: 300px;vertical-align: bottom; ">
-			<h3 style="margin-left: 100px;font-size: 35px;color: #1D334C">¡PROTEGE LO QUE MÁS QUIERES!</h3>
 		</div>
 	</div>
 </section>
