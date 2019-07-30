@@ -1,5 +1,5 @@
   <style type="text/css">
-    a{
+    nav a{
       font-family: 'Gotham Bold';
     }
   </style>
@@ -19,13 +19,13 @@
           <button class="btn btn-outline-white btn-md my-0 ml-sm-2" type="submit"><i class="fas fa-search" style="color: white;"></i></button>
         </form>
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item" id="inicio">
+          <!-- <li class="nav-item" id="inicio">
             <a class="nav-link" href="/">INICIO
               <span class="sr-only">(current)</span>
             </a>
-          </li>
+          </li> -->
           <li class="nav-item" id="tienda">
-            <a class="nav-link" href="{{Route('tienda.index')}}">TIENDA</i></a>
+            <a class="nav-link" href="{{url('/')}}">TIENDA</i></a>
           </li>
          
 

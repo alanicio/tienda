@@ -10,7 +10,8 @@ class Producto extends Model
         'modelo',
         'marca',
         'titulo',
-        'costo',
+        'costoMXN',
+        'costoUSD',
         'peso',
         'imagen',
         'descripcion',
@@ -19,6 +20,6 @@ class Producto extends Model
     ];
 
     public function categoria(){
-        return $this->belongsTo('App\Categoria');
+        return $this->belongsTo('App\Categoria','categoria_id');
     }
 }

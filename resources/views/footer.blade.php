@@ -1,6 +1,6 @@
 
 <!-- Footer -->
-  <footer style="background-color: #1D334C;background-size: 200%;">
+  <footer style="background-color: #1D334C;">
   	<div class="text-center">
   		<a href=" https://www.sistemasnonex.com/" target="_blank"><img src="{{asset('imgs/footer/internet.png')}}" style="width: 40px;margin-left: 6px;"></a>
 	  	<a href="{{url('contacto')}}"><img src="{{asset('imgs/footer/mail.png')}}" style="width: 30px;margin-left: 6px;"></a>

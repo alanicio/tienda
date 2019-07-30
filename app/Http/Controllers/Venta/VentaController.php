@@ -10,6 +10,7 @@ use App\Producto;
 use App\Venta;
 use App\User;
 use App\productos_ventas;
+use App\Direccione;
 use Illuminate\Support\Facades\Auth;
 use Currency;
 use App\Mail\ReciboDeCompra;
@@ -63,33 +64,34 @@ class VentaController extends Controller
      */
     public function store(Request $request)
     {
-        if(Auth::check())
-        {
-            //dd(Auth::user()->id);
-            //dd('esta logueado');
-            $venta=new Venta();
-            $venta->user_id=Auth::user()->id;
-        }
-        else
-        {
-            //dd('no esta logueado');
-            return redirect('/login');
-        }
-        //dd(Session::get('cantidadSeleccionada'.$value);
-        foreach ($request->id as $key => $value) {
-            if((Session::get('cantidadSeleccionada'.$value)+Producto::find($value)->inventario)<$request->cantidad[$key])
-            {
-                return $this->create();
-            }
-            //if(Producto::find($value))
-        }
-        $productos=Producto::findMany($request->id);
+        // dd('store');
+        // if(Auth::check())
+        // {
+        //     //dd(Auth::user()->id);
+        //     //dd('esta logueado');
+        //     $venta=new Venta();
+        //     $venta->user_id=Auth::user()->id;
+        // }
+        // else
+        // {
+        //     return redirect('/login');
+        // }
+        // foreach ($request->id as $key => $value) {
+        //     if((Session::get('cantidadSeleccionada'.$value)+Producto::find($value)->inventario)<$request->cantidad[$key])
+        //     {
+        //         return $this->create();
+        //     }
+        //     //if(Producto::find($value))
+        // }
+        $venta=new Venta();
+        $venta->user_id=Auth::user()->id;
+        $productos=Producto::findMany(Session::get('Datos_de_compra')['id']);
         $totalMXN=0;
         $totalUSD=0;
         //dd($request->cantidad);
         foreach ($productos as $index=>$p) {
-            $totalMXN+=($p->costoMXN*$request->cantidad[$index]);
-            $totalUSD+=($p->costoUSD*$request->cantidad[$index]);
+            $totalMXN+=($p->costoMXN*Session::get('Datos_de_compra')['cantidad'][$index]);
+            $totalUSD+=($p->costoUSD*Session::get('Datos_de_compra')['cantidad'][$index]);
         }
         $venta->totalMXN=$totalMXN;
         $venta->totalUSD=$totalUSD;
@@ -100,10 +102,14 @@ class VentaController extends Controller
             $pivote->precio_en_compra_USD=$p->costoUSD;
             $pivote->precio_en_compra_MXN=$p->costoMXN;
             $pivote->venta_id=$venta->id;
-            $pivote->cantidad=$request->cantidad[$index];
+            $pivote->cantidad=Session::get('Datos_de_compra')['cantidad'][$index];
             $pivote->save();
         }
         $i=0;
+        $direccion=new Direccione(Session::get('direccion'));
+        $direccion->venta_id=$venta->id;
+        $direccion->save();
+        Session::forget('direccion');
         foreach (Session::all() as $key => $value) {
             if(strpos($key,'roducto'))
             {

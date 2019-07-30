@@ -26,7 +26,7 @@ class LoginController extends Controller
      * @var string
      */
     //Session::flush();
-    protected $redirectTo = '/tienda';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.

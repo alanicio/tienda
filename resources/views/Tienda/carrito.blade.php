@@ -5,7 +5,7 @@
     <h4>Carrito <i class="fas fa-cart-arrow-down"></i></h4>
   </div>
   <div class="card-body">
-  		<form method="POST" action="{{Route('ventas.store')}}">
+  		<form method="POST" action="{{Route('direccion.create')}}">
   			@csrf
 	    	<table class="table">
 				<thead>

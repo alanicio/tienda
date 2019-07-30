@@ -41,7 +41,6 @@
     @foreach($productos as $p)
       <div class="col-lg-4 col-md-6 mb-4">
         <div class="card h-100">
-         <!--  <a href="{{route('tienda.show',['id'=>$p->id])}}"><img class="card-img-top" src="{{strlen($p->imagen)?$p->imagen:asset('imgs/not_found.jpeg')}}" alt=""></a> -->
          @php
             if(isset($p->categoria))
             {
@@ -60,7 +59,6 @@
           <a href="{{isset($p->categoria)?url('/'.$categoria.'/'.$p->id.'-'.$titulo.'-'.$marca.'-'.$modelo):url('/otros/'.$p->id.'-'.$titulo.'-'.$marca.'-'.$modelo)}}"><img class="card-img-top" src="{{strlen($p->imagen)?$p->imagen:asset('imgs/not_found.jpeg')}}" alt=""></a>
           <div class="card-body">
             <h5 class="card-title">
-              <!-- <a href="{{route('tienda.show',['id'=>$p->id])}}"> -->
               <a href="{{isset($p->categoria)?url('/'.$categoria.'/'.$p->id.'-'.$titulo.'-'.$marca.'-'.$modelo):url('/otros/'.$p->id.'-'.$titulo.'-'.$marca.'-'.$modelo)}}">{{stripslashes(utf8_decode($p->titulo))}}</a>
             </h5>
 
