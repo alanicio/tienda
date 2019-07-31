@@ -179,7 +179,7 @@ class ProductoController extends Controller
         return $sorted;
     }
 
-    public function LimpiarAcentos($string)
+    public static function LimpiarAcentos($string)
     {
         if(preg_match_all('/[áéíóú]/i',$string,$matches))
         {

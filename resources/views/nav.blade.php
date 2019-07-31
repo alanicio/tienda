@@ -31,7 +31,7 @@
 
           @if(Auth::check())
             <li class="nav-item" id="carrito">
-              <a class="nav-link" href="{{Route('ventas.create')}}"><i class="fas fa-shopping-cart"></i></a>
+              <a class="nav-link" href="{{Route('ventas.create')}}"><i class="fas fa-shopping-cart" style="color: #e3651d"></i></a>
             </li>
             <li class="nav-item dropdown" id="usuario">
               <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{Auth::User()->name}}</a>

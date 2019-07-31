@@ -11,7 +11,9 @@
 			    <tr>
 			      <th scope="col">#</th>
 			      <th scope="col">Fecha de compra</th>
+			      <th scope="col">Subtotal</th>
 			      <th scope="col">Total</th>
+			      <th scope="col">Direccion</th>
 			      <th>Ver Productos</th>
 			    </tr>
 			  </thead>
@@ -23,7 +25,16 @@
 			  		<tr>
 				      <th scope="row">{{$n++}}</th>
 				      <td>{{$venta->created_at->format('d/m/Y')}}</td>
+				      <td>${{round($venta->totalMXN/1.16,2)}}</td>
 				      <td>${{round($venta->totalMXN,2)}}</td>
+				      @if($venta->direccion->estado=='nonex')
+				      	<td>GRUPO DE INTEGRADORES NONEX S.A. DE C.V.<br>
+			      Salaverry 987- 205 Lindavista entre Av. Ticoman y Calle. Salamina
+			      C.P. 07300, Gustavo A. Madero, CDMX.<br><br></td>
+				      @else
+				      	<td>{{$venta->direccion->estado}},{{$venta->direccion->municipio}},{{$venta->direccion->codigo_postal}},{{$venta->direccion->colonia}},{{$venta->direccion->calle}}</td>
+				      @endif
+				      
 				      <td><i class="clickable far fa-arrow-alt-circle-down" data-toggle="collapse" data-target="#accordionV{{$venta->id}}"></i></td>
 				    </tr>
 				    <tr>

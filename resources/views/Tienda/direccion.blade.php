@@ -91,6 +91,12 @@
       if(this.value==1)
       {
         $('#nonexDireccion').show();
+        $('input').prop('required',false);
+        $('select').prop('required',false);
+      }
+      else
+      {
+        $('#nonexDireccion').hide(); 
       }
     });
   </script>

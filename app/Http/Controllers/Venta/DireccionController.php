@@ -69,11 +69,16 @@ class DireccionController extends Controller
      */
     public function store(Request $request)
     {
-        Session::put('direccion',$request->all());
-        //dd(Session::get('Datos_de_compra')['id']);
+        //dd($request->all());
+        if($request->codigo_postal)
+        {
+            Session::put('direccion',$request->all());    
+        }
+        else
+        {
+            Session::put('direccion','nonex');  
+        }
         $productos=Producto::findMany(Session::get('Datos_de_compra')['id']);
-        //dd(key(Session::get('Datos_de_compra')['id']));
-        //dd($productos);
         return view('Tienda.confirmacion',['productos'=>$productos]);
     }
 
@@ -124,7 +129,32 @@ class DireccionController extends Controller
 
     public function cp(Request $request)
     {
-        $data=json_decode(file_get_contents('https://api-codigos-postales.herokuapp.com/v2/codigo_postal/'.$request->cp));
-        return view('Tienda.cp',['colonias'=>$data->colonias,'estado'=>$data->estado,'municipio'=>$data->municipio]);
+        //Con la api caida
+        // $data=json_decode(file_get_contents('https://api-codigos-postales.herokuapp.com/v2/codigo_postal/'.$request->cp));
+        // return view('Tienda.cp',['colonias'=>$data->colonias,'estado'=>$data->estado,'municipio'=>$data->municipio]);
+        $fila=0;
+        if (($gestor = fopen("cp.csv", "r")) !== FALSE)
+        {
+            while (($datos = fgetcsv($gestor)) !== FALSE)
+            {
+                if($fila)
+                {
+                    if ($datos[6]==$request->cp)
+                    {
+                        $colonias[]=$datos[7];
+                        $municipio=$datos[3];
+                        $estado=$datos[1];
+                    }
+                }
+                $fila++;
+            }   
+            fclose($gestor);
+        }
+        if(!isset($colonias))
+        {
+            return view('Tienda.cp_error');
+            
+        }
+        return view('Tienda.cp',['colonias'=>$colonias,'estado'=>$estado,'municipio'=>$municipio]);
     }
 }

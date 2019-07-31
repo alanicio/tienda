@@ -64,7 +64,7 @@ class VentaController extends Controller
      */
     public function store(Request $request)
     {
-        // dd('store');
+        // dd($request);
         // if(Auth::check())
         // {
         //     //dd(Auth::user()->id);
@@ -106,10 +106,27 @@ class VentaController extends Controller
             $pivote->save();
         }
         $i=0;
-        $direccion=new Direccione(Session::get('direccion'));
+        if(Session::get('direccion')!='nonex')
+        {
+            $direccion=new Direccione(Session::get('direccion'));
+        }
+        else
+        {
+            $direccion=new Direccione([
+                'calle'=>'nonex',
+                'num_ext'=>'nonex',
+                'num_int'=>'nonex',
+                'colonia'=>'nonex',
+                'codigo_postal'=>'nonex',
+                'municipio'=>'nonex',
+                'estado'=>'nonex',
+            ]);
+        }
+        
         $direccion->venta_id=$venta->id;
         $direccion->save();
         Session::forget('direccion');
+        Session::forget('Datos_de_compra');
         foreach (Session::all() as $key => $value) {
             if(strpos($key,'roducto'))
             {

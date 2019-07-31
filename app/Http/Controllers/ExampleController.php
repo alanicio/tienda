@@ -12,5 +12,6 @@ class ExampleController extends Controller
 {
     public function example(){
     	dd(Session::all());
+    	
     }
 }
