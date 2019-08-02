@@ -106,9 +106,21 @@ class VentaController extends Controller
             $pivote->save();
         }
         $i=0;
-        if(Session::get('direccion')!='nonex')
+        if(Session::get('direccion')!='nonex' && Session::get('direccion')!='comunicarse')
         {
             $direccion=new Direccione(Session::get('direccion'));
+        }
+        elseif (Session::get('direccion')=='comunicarse') {
+            $direccion=new Direccione([
+                'calle'=>'comunicarse',
+                'num_ext'=>'comunicarse',
+                'num_int'=>'comunicarse',
+                'colonia'=>'comunicarse',
+                'codigo_postal'=>'comunicarse',
+                'municipio'=>'comunicarse',
+                'estado'=>'comunicarse',
+                'telefono'=>Session::get('telefono'),
+            ]);
         }
         else
         {
@@ -120,6 +132,7 @@ class VentaController extends Controller
                 'codigo_postal'=>'nonex',
                 'municipio'=>'nonex',
                 'estado'=>'nonex',
+                'telefono'=>Session::get('telefono'),
             ]);
         }
         
@@ -133,6 +146,7 @@ class VentaController extends Controller
                 Session::forget('producto'.$value);
                 Session::forget('cantidadOriginal'.$value);
                 Session::forget('cantidadSeleccionada'.$value);
+                Session::forget('telefono');
             }
         }
         //dd(Session::all());
@@ -156,6 +170,7 @@ class VentaController extends Controller
      */
     public function show($id)
     {
+        //dd(User::find($id)->ventas);
         return view('Cliente.historial',['ventas'=>User::find($id)->ventas]);
     }
 

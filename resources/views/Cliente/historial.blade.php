@@ -25,12 +25,14 @@
 			  		<tr>
 				      <th scope="row">{{$n++}}</th>
 				      <td>{{$venta->created_at->format('d/m/Y')}}</td>
-				      <td>${{round($venta->totalMXN/1.16,2)}}</td>
-				      <td>${{round($venta->totalMXN,2)}}</td>
+				      <td>${{number_format($venta->totalMXN/1.16,2)}}</td>
+				      <td>${{number_format($venta->totalMXN,2)}}</td>
 				      @if($venta->direccion->estado=='nonex')
 				      	<td>GRUPO DE INTEGRADORES NONEX S.A. DE C.V.<br>
-			      Salaverry 987- 205 Lindavista entre Av. Ticoman y Calle. Salamina
-			      C.P. 07300, Gustavo A. Madero, CDMX.<br><br></td>
+						      Salaverry 987- 205 Lindavista entre Av. Ticoman y Calle. Salamina
+						      C.P. 07300, Gustavo A. Madero, CDMX.<br><br></td>
+					  @elseif($venta->direccion->estado=='comunicarse')
+					  		<td>A tratar con agente de ventas</td>
 				      @else
 				      	<td>{{$venta->direccion->estado}},{{$venta->direccion->municipio}},{{$venta->direccion->codigo_postal}},{{$venta->direccion->colonia}},{{$venta->direccion->calle}}</td>
 				      @endif
@@ -54,7 +56,7 @@
 							    			<td>{{utf8_decode($p->modelo)}}</td>
 							    			<td>{{stripslashes(utf8_decode($p->titulo))}}</td>
 							    			<td>{{$p->pivot->cantidad}}</td>
-							    			<td>${{round($p->pivot->precio_en_compra_MXN,2)}}</td>
+							    			<td>${{number_format($p->pivot->precio_en_compra_MXN,2)}}</td>
 							    		</tr>
 								    @endforeach
 					    		</tbody>

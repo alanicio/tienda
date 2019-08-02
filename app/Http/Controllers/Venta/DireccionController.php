@@ -74,9 +74,14 @@ class DireccionController extends Controller
         {
             Session::put('direccion',$request->all());    
         }
+        elseif ($request->comunicate) {
+            Session::put('direccion','comunicarse');
+            Session::put('telefono',$request->telefono);
+        }
         else
         {
-            Session::put('direccion','nonex');  
+            Session::put('direccion','nonex'); 
+            Session::put('telefono',$request->telefono);
         }
         $productos=Producto::findMany(Session::get('Datos_de_compra')['id']);
         return view('Tienda.confirmacion',['productos'=>$productos]);

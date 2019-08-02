@@ -10,6 +10,7 @@
     "require": {
         "php": "^7.1.3",
         "akaunting/money": "^1.0",
+        "barryvdh/laravel-dompdf": "^0.8.4",
         "danielme85/laravel-cconverter": "^0.2.1",
         "fideloper/proxy": "^4.0",
         "guzzlehttp/guzzle": "^6.3",

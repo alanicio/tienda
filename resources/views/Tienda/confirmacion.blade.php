@@ -1,5 +1,37 @@
 @extends('layouts.app')
 @section('content')
+@php
+  use App\Producto;
+  $peso=0;
+  $envio=0;
+  if(Session::get('direccion')!='nonex')
+  {
+  	foreach(Session::get('Datos_de_compra')['id'] as $id)
+	  {
+	    $peso+=Producto::find($id)->peso*Session::get('cantidadSeleccionada'.$id);
+
+	  }
+	  if($peso<=3)
+	  {
+	    $envio=130;
+	  }
+	  elseif($peso<=7)
+	  {
+	    $envio=160;
+	  }
+	  elseif($peso<=13)
+	  {
+	    $envio=180;
+	  }
+	  elseif($peso<=19)
+	  {
+	    $envio=340;
+	  }
+  }
+
+  $envio*=1.16;
+	  
+@endphp
 <div class="card">
 	<div class="card-header">
 		<h3>Favor de confirmar los datos de su compra</h3>
@@ -23,8 +55,8 @@
 						<tr>
 							<td>{{$p->modelo}}</td>
 							<td>{{$p->marca}}</td>
-							<td>{{$p->titulo}}</td>
-							<td>${{round($p->costoMXN,2)}}</td>
+							<td>{{stripslashes(utf8_decode($p->titulo))}}</td>
+							<td>${{number_format($p->costoMXN,2)}}</td>
 							<td>@php
 								foreach(Session::get('Datos_de_compra')['id'] as $key=>$value)
 								{
@@ -37,18 +69,21 @@
 								}
 								@endphp
 							</td>
-							<td>${{round($p->costoMXN*$cantidad,2)}}</td>
+							<td>${{number_format($p->costoMXN*$cantidad,2)}}</td>
 						</tr>
 					@endforeach
 				</tbody>
 			</table>
 		</div>
 		<div>
-			<h4>Direccion para entregar/recoger</h4>
+			<h4>Dirección para entregar/recoger</h4>
+			<p>Referencia telefónica:{{Session::get('telefono')}}</p>
 			@if(Session::get('direccion')=='nonex')
 				GRUPO DE INTEGRADORES NONEX S.A. DE C.V.<br>
-			      Salaverry 987- 205 Lindavista entre Av. Ticoman y Calle. Salamina
+			      Salaverry 987- 304 Lindavista entre Av. Ticoman y Calle. Salamina
 			      C.P. 07300, Gustavo A. Madero, CDMX.<br><br>
+			@elseif(Session::get('direccion')=='comunicarse')
+				<p>A tratar con agente de ventas</p>
 			@else
 				<form>
 					<div class="row">
@@ -140,22 +175,39 @@
 		<div class="form-group row">
 			<label for="subtotal" class="col-sm-2 col-form-label">Subtotal</label>
 			<div class="col-sm-10">
-			  <input type="text" readonly class="form-control-plaintext" id="subtotal" value="${{round($total/1.16,2)}}">
+			  <input type="text" readonly class="form-control-plaintext" id="subtotal" value="${{number_format($total/1.16,2)}}">
+			</div>
+		</div>
+		<div class="form-group row">
+			<label for="envio" class="col-sm-2 col-form-label">Costo de envio</label>
+			<div class="col-sm-10">
+			  <input type="text" readonly class="form-control-plaintext" id="envio" value="${{number_format($envio/1.16,2)}}">
+			</div>
+		</div>
+		<div class="form-group row">
+			<label for="iva" class="col-sm-2 col-form-label">IVA</label>
+			<div class="col-sm-10">
+			  <input type="text" readonly class="form-control-plaintext" id="iva" value="${{number_format((($total+$envio)/1.16)*0.16,2)}}">
 			</div>
 		</div>
 		<div class="form-group row">
 			<label for="total" class="col-sm-2 col-form-label">Total</label>
 			<div class="col-sm-10">
-			  <input type="text" readonly class="form-control-plaintext" id="total" value="${{round($total,2)}}">
+			  <input type="text" readonly class="form-control-plaintext" id="total" value="${{number_format($total+$envio,2)}}">
 			</div>
 		</div>
 		<form action="{{route('ventas.store')}}" method="POST">
 			@csrf
 			<input class="btn btn-success" type="submit" value="Confirmar compra">
+			<a type="button" class="btn btn-warning" href="{{route('ventas.create')}}">Editar compra</a>
+			<!-- <a type="button" class="btn btn-danger">Cancelar compra</a> -->
+			<a href="javascript:history.back()" class="btn btn-info" role="button">Atras</a>
 		</form>
 			
 			
 	</div>
 	
 </div>
+
+
 @endsection

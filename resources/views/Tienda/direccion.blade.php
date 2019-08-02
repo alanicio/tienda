@@ -1,24 +1,53 @@
 @extends('layouts.app')
 @section('content')
+@php
 
+  use App\Producto;
+  $peso=0;
+  foreach(Session::get('Datos_de_compra')['id'] as $id)
+  {
+    $peso+=Producto::find($id)->peso*Session::get('cantidadSeleccionada'.$id);
+
+  }
+  
+
+@endphp
   <form id="Direccion" style="margin:15%;" method="POST" action="{{url('venta/confirmacion')}}">
     @csrf
-    <div class="form-group col-md-4">
+    <div class="form-group col-md-6">
+      <div class="form-group col-md-6">
+          <label for="inputTel">Teléfono</label>
+          <input type="text" required class="form-control" id="inputTel" name="telefono">
+      </div>
       <select id="Envio" class="form-control">
-        <option selected value="">Seleccione...</option>
-        <option value="1">Recoger en sucursal</option>
-        <option value="2">Deseo que me lo envien</option>
+        <option selected value="">Seleccione la forma de envio</option>
+        <option value="1">Recoger en sucursal sin costo</option>
+
+        @if($peso<=19)
+          <option value="2">Deseo que me lo envien (aplica costos de envio)</option>
+        @endif
       </select>
     </div>
     <div id="nonexDireccion" style="display: none;">
       GRUPO DE INTEGRADORES NONEX S.A. DE C.V.
       Salaverry 987- 205 Lindavista entre Av. Ticoman y Calle. Salamina
       C.P. 07300, Gustavo A. Madero, CDMX.<br><br>
+      @if($peso>19)
+        <div class="input-group ">
+          <div class="input-group-prepend">
+            <div class="input-group-text">
+              <input type="checkbox" name="comunicate">
+            </div>
+          </div>
+          <textarea class="form-control" aria-label="With textarea" readonly="">El producto no esta disponible para envio, si desea un envio, marque aqui para que uno de nuestros asesores se comunique con usted</textarea>
+        </div>
+      @endif
       <button type="submit" class="btn btn-primary">Finalizar compra</button>
     </div>
+    
     <div  id="envioForm" style="display: none;">
        <div class="form-group col-md-2">
-            <label for="inputCP">Codigo postal</label>
+            <label for="inputCP">Código postal</label>
             <input type="text" class="form-control" id="inputCP" name="codigo_postal" required="">
         </div>
       <div class="form-group">
@@ -33,7 +62,7 @@
 
         <div class="form-group col-md-2">
             <label for="inputInt">Numero interior</label>
-            <input type="text" required="" class="form-control" id="inputInt" name="num_int">
+            <input type="text" class="form-control" id="inputInt" name="num_int">
         </div>
       </div>
       <div id="data_from_cp">
@@ -93,6 +122,7 @@
         $('#nonexDireccion').show();
         $('input').prop('required',false);
         $('select').prop('required',false);
+        $('#inputTel').prop('required',true);
       }
       else
       {

@@ -17,13 +17,14 @@ class CreateDireccionesTable extends Migration
             $table->increments('id');
             $table->string('calle');
             $table->string('num_ext');
-            $table->string('num_int');
+            $table->string('num_int')->nullable();
             $table->string('colonia');
             $table->string('codigo_postal');
             $table->string('municipio');
             $table->string('estado');
             $table->integer('venta_id')->unsigned();
             $table->foreign('venta_id')->references('id')->on('ventas');
+            $table->string('telefono');
             $table->timestamps();
         });
     }

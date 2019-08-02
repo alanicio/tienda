@@ -12,6 +12,6 @@ class AtencionClienteController extends Controller
     public function contacto(Request $request)
     {
     	Mail::to('gabriela@sistemasnonex.com')->send(new AtencionAlCliente($request->all()));
-    	dd($request->all());
+    	return redirect('/');
     }
 }

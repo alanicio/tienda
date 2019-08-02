@@ -16,6 +16,7 @@ class Direccione extends Model
         'municipio',
         'estado',
         'venta_id',
+        'telefono',
     ];
 
     public function venta(){

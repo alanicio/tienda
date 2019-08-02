@@ -12,6 +12,7 @@ class ExampleController extends Controller
 {
     public function example(){
     	dd(Session::all());
+    	return view('mails.Recibo',['venta'=>Venta::find(5)]);
     	
     }
 }

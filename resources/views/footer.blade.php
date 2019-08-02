@@ -20,7 +20,7 @@
 			<span style="margin-left: 20px;">Aviso de privacidad</span>
 			<span style="margin-left: 20px;">Área legal</span>
 			<span style="margin-left: 20px;">Cookies</span>
-			<span style="margin-left: 100px;">TODOS LOS DERECHOS RESERVADOS A SISTEMAS NONEX S.A DE C.V. | 2019</span>
+			<span style="margin-left: 100px;">TODOS LOS DERECHOS RESERVADOS A GRUPO DE INTEGRADORES NONEX S.A DE C.V. | 2019</span>
 		</div>
 		
   	</div>
