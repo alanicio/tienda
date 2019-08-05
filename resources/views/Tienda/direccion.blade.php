@@ -39,7 +39,7 @@
               <input type="checkbox" name="comunicate">
             </div>
           </div>
-          <textarea class="form-control" aria-label="With textarea" readonly="">El producto no esta disponible para envio, si desea un envio, marque aqui para que uno de nuestros asesores se comunique con usted</textarea>
+          <textarea class="form-control" aria-label="With textarea" readonly="">El producto no está disponible para envío, si desea un envío, marque aquí para que uno de nuestros asesores se comunique con usted</textarea>
         </div>
       @endif
       <button type="submit" class="btn btn-primary">Finalizar compra</button>

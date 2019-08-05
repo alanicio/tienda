@@ -47,12 +47,12 @@
 <link href="/font/gotham/gotham-font.css" rel="stylesheet">
 <div style="width: 100%;height: 18%;margin-left: 15%;"><img src="{{ $message->embed(public_path() . '/imgs/logo.png') }}" style="width: 100px;float: left"><h3>Confirmación de pedido</h3></div>
 <div style="margin-left: 15%;">
-	<p>{{$venta->created_at}}</p>
+	<p>{{$venta->created_at->format('d,m,Y h:i A')}}</p>
 </div>
 <div style="margin-left: 15%">
 	<div><h4>{{$venta->user->name}}, gracias por tu compra</h4></div>
 	<h5 style="font-family: 'Gotham Light';">Número de pedido #NX{{$venta->created_at->format('y')}}{{$venta->created_at->format('m')}}{{$venta->id+99}}</h5>
-	<p>Referencia telefónia:{{$venta->direccion->telefono}}</p>
+	<p>Referencia telefónica:{{$venta->direccion->telefono}}</p>
 	@if($venta->direccion->estado=='nonex')
 		<p>Le enviaremos un correo de confirmación cuando pueda recoger su  pedido en:<br>GRUPO DE INTEGRADORES NONEX S.A. DE C.V.<br>
 			      Salaverry 987- 304 Lindavista entre Av. Ticoman y Calle. Salamina
@@ -66,11 +66,11 @@
 	@endif
 	<h5>Tipo de entrega</h5>
 	<p>Terrestre</p>
-	<h5>Metodo de pago</h5>
+	<h5>Método de pago</h5>
 	<h4>Artículos</h4>
 	<table border="1" style="width: 50%;">
 		<thead style="margin: 15%;">
-			<th>Articulo</th>
+			<th>Artículo</th>
 			<th>Precio c/u</th>
 			<th>Cantidad</th>
 			<th>Precio total</th>
@@ -92,11 +92,12 @@
 		</tbody>
 	</table>
 	<br>
-
-	<div style="margin-left: 40%;"><strong>Subtotal</strong> <div style="display: inline-block;margin-left: 65px">${{number_format($venta->totalMXN/1.16,2)}}</div></div>
-	<div style="margin-left: 40%;"><strong>Costo de envio </strong><div style="display: inline-block;margin-left: 9px">${{number_format($envio/1.16,2)}}</div></div>
-	<div style="margin-left: 40%;"><strong>Iva </strong><div style="display: inline-block;margin-left: 115px">${{number_format((($venta->totalMXN+$envio)/1.16)*0.16,2)}}</div></div>
-	<div style="margin-left: 40%;"><strong>Total </strong><div style="display: inline-block;margin-left: 97px">${{number_format($venta->totalMXN+$envio,2)}}</div></div>
+	<div style="margin-left:30%">
+		<div><strong>Subtotal</strong> <div style="display: inline-block;margin-left: 75px">${{number_format($venta->totalMXN/1.16,2)}}</div></div>
+		<div><strong>Costo de envío </strong><div style="display: inline-block;margin-left: 46px">${{number_format($envio/1.16,2)}}</div></div>
+		<div><strong>Iva </strong><div style="display: inline-block;margin-left: 115px">${{number_format((($venta->totalMXN+$envio)/1.16)*0.16,2)}}</div></div>
+		<div><strong>Total </strong><div style="display: inline-block;margin-left: 97px">${{number_format($venta->totalMXN+$envio,2)}}</div></div>
+	</div>
 </div>
 <br><br><br>
 

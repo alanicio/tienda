@@ -60,7 +60,7 @@ use \App\Http\Controllers\Producto\ProductoController;
 
 
          @endphp
-          <a href="{{isset($p->categoria)?url('/'.$categoria.'/'.$p->id.'-'.$titulo.'-'.$marca.'-'.$modelo):url('/otros/'.$p->id.'-'.$titulo.'-'.$marca.'-'.$modelo)}}"><img class="card-img-top" src="{{strlen($p->imagen)?$p->imagen:asset('imgs/not_found.jpeg')}}" alt=""></a>
+          <a href="{{isset($p->categoria)?url('/'.$categoria.'/'.$p->id.'-'.$titulo.'-'.$marca.'-'.$modelo):url('/otros/'.$p->id.'-'.$titulo.'-'.$marca.'-'.$modelo)}}"><img class="card-img-top" src="{{strlen($p->imagen)?$p->imagen:asset('imgs/not_found.png')}}" alt=""></a>
           <div class="card-body d-flex flex-column">
             <h5 class="card-title">
               <a href="{{isset($p->categoria)?url('/'.$categoria.'/'.$p->id.'-'.$titulo.'-'.$marca.'-'.$modelo):url('/otros/'.$p->id.'-'.$titulo.'-'.$marca.'-'.$modelo)}}">{{stripslashes(utf8_decode($p->titulo))}}</a>
@@ -77,13 +77,14 @@ use \App\Http\Controllers\Producto\ProductoController;
             <div class=" mt-auto text-center">
               @if(Auth::check())
                 @if($p->inventario>0)
+                  <input type="number" name="{{$p->id}}" id="cantidad{{$p->id}}" min="1" value="{{Session::get('cantidadSeleccionada'.$p->id)>0?Session::get('cantidadSeleccionada'.$p->id):0}}" style="width: 30%;">
                   @php
                     $verificar=1;
                     foreach(array_slice(Session::all(), 4) as $id)
                     {
                       if($p->id==$id)
                       {
-                        echo '<a id="add_item" type="button" class="btn btn-success disabled mt-auto text-center"><i class="fas fa-check-square"></i> Añadido al carrito</a>';
+                        echo "<a id='".$p->id."' type='button' class='btn btn-success btn-sm disabled mt-auto text-center'><i class='fas fa-check-square'></i> Añadido al carrito</a>";
                         $verificar=0;
                         break;
                       }
@@ -124,27 +125,81 @@ use \App\Http\Controllers\Producto\ProductoController;
   $('#carrito').prop("class","nav-item");
   $('#usuario').prop("class","nav-item dropdown");
   $('#sesion').prop("class","nav-item dropdown");
-
+  
   $('.btn-success').click(function(){
     var id=$(this).attr('id');
+    var cantidad=$('#cantidad'+id).val();
     $.ajax({
-        type: "GET",
-        url: '{{url("/add_producto")}}'+'/'+id,
+        type: "POST",
+        url: '{{url("/carrito")}}',
+        data:{id:id,cantidad:cantidad},
         success: function(res){
-          if(res>0)
+          if(res.status>0)
           {
-            $('#'+id).attr('class','btn btn-success disabled');
+            $('#'+id).attr('class','btn btn-success btn-sm disabled mt-auto text-center');
             $('#'+id).html('<i class="fas fa-check-square"></i> Añadido al carrito');
+            if($('#cantidad'+id).val()==0)
+            {
+              $('#cantidad'+id).val(1)
+            }
           }
           else
           {
-            swal("Se acaban de terminar existencias!", "los sentimos, acaban de seleccionar las ultimas existencias de este producto", "error");
-             location.reload();
+            swal("Existencias insuficientes", "¡No disponemos de las existencias suficientes!", "error")
+            .then((value) => {
+              location.reload(true);
+            });
           }
         },
     });
   });
 
+$('input').change(function(){
+  var fila=$(this).attr('name');
+  //console.log($('#'+fila).attr('class')=='btn btn-success btn-sm disabled mt-auto text-center');
+    if($('#'+fila).attr('class')=='btn btn-success btn-sm disabled mt-auto text-center')
+    {
+      var cantidad=-1*(parseInt(this.value)-parseInt(this.defaultValue));
+      this.defaultValue=this.value;
+      $.ajax({
+            type: "POST",
+            url: '{{url("/convert_c")}}',
+            data:{id:fila,cantidad:cantidad,numU:this.value},
+            success: function(res){
+              if(res.status)
+              {
+                // $('#total'+fila).html('$'+(parseFloat($('#'+fila).val())*res.costo).toFixed(2));
+                // $('[id^=total]').each(function(index){
+                //   //console.log($(this).html())
+                //   total+=parseFloat($(this).html().replace('$',''));
+                // });
+                // //console.log(total);
+                // $('#Ftotal').html('$'+total.toFixed(2));
+                // $('#'+fila).defaultValue=$('#'+fila).value;
+                 
+              }
+              else
+              {
+                // $('#'+fila).attr('readonly', true);
+                swal("Existencias insuficientes", "¡No disponemos de las existencias suficientes!", "error")
+            .then((value) => {
+              location.reload(true);
+            });
+                // swal("Existencias insuficientes", "¡No disponemos de las existencias suficientes!", "error");
+           //     setTimeout(function(){
+              //     location.reload(true);
+              // }, 2000);
+                
+              }
+
+                
+            },
+        });
+    }
+      
+      // var total=0;
+      // 
+  });
 </script>
 
 

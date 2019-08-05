@@ -25,6 +25,7 @@ Route::post('cp','Venta\DireccionController@cp');
 Route::post('venta/confirmacion','Venta\DireccionController@store');
 
 //Ventas
+Route::post('carrito','Venta\VentaController@shopping');
 Route::post('atencion_cliente','Venta\AtencionClienteController@contacto')->name('contacto');
 Route::get('add_producto/{id}','Venta\VentaController@AddCarrito');
 Route::get('quitar_carrito/{id}','Venta\VentaController@RmCarrito');

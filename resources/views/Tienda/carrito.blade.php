@@ -82,7 +82,7 @@
 
 
 	$('input').change(function(){
-		console.log(this.defaultValue);
+		// console.log(this.defaultValue);
 		var fila=$(this).attr('id');
 		var total=0;
 		var cantidad=-1*(parseInt(this.value)-parseInt(this.defaultValue));

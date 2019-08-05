@@ -30,6 +30,7 @@ class ReciboDeCompra extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.Recibo');
+        $venta=$this->venta;
+        return $this->view('mails.Recibo')->subject('Recibo de compra #NX'.$venta->created_at->format('y').$venta->created_at->format('m').($venta->id+99));
     }
 }

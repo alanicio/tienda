@@ -159,6 +159,7 @@ class VentaController extends Controller
     public function Nonextore(Venta $venta)
     {
         Mail::to($venta->user->email)->send(new ReciboDeCompra($venta));
+        Mail::to('ventas@sistemasnonex.com')->send(new ReciboDeCompra($venta));
         return $this->show(Auth::User()->id);
     }
 
@@ -265,6 +266,37 @@ class VentaController extends Controller
                     'value'=>$request->numU+$request->cantidad];
         }
         
+        return response()->json($resul);
+    }
+
+    public function shopping(Request $request)
+    {
+        $id=$request->id;
+        $producto=Producto::find($request->id);
+        if($request->cantidad==0)
+        {
+            $cantidad=1;
+        }
+        elseif ($request->cantidad>0) {
+            $cantidad=$request->cantidad;
+        }
+        else
+        {
+            return response()->json(['status'=>0]);
+        }
+        if($producto->inventario>0 && $cantidad<=$producto->inventario)
+        {
+            Session::put('producto'.$id,$id);
+            Session::put('cantidadOriginal'.$id,$producto->inventario);
+            Session::put('cantidadSeleccionada'.$id,$cantidad);
+            $producto->inventario-=$cantidad;
+            $producto->update();
+            $resul=['status'=>1];
+        }
+        else
+        {
+            $resul=['status'=>0];
+        }
         return response()->json($resul);
     }
 }
