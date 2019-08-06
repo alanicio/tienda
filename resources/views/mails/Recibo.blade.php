@@ -81,7 +81,7 @@
 	<table border="1" style="width: 50%;">
 		<thead style="margin: 15%;">
 			<th>Artículo</th>
-			<th>Precio c/u</th>
+			<th>Precio unitario</th>
 			<th>Cantidad</th>
 			<th>Precio total</th>
 		</thead>
@@ -105,7 +105,7 @@
 	<div style="margin-left:30%;width: 28%;">
 		<div><strong>Subtotal</strong> <div style="display: inline-block; float: right;">${{number_format($venta->totalMXN/1.16,2)}}</div></div>
 		<div><strong>Costo de envío </strong><div style="display: inline-block; float: right">${{number_format($envio/1.16,2)}}</div></div>
-		<div><strong>Iva </strong><div style="display: inline-block; float: right">${{number_format((($venta->totalMXN+$envio)/1.16)*0.16,2)}}</div></div>
+		<div><strong>IVA </strong><div style="display: inline-block; float: right">${{number_format((($venta->totalMXN+$envio)/1.16)*0.16,2)}}</div></div>
 		<div><strong>Total </strong><div style="display: inline-block; float: right">${{number_format($venta->totalMXN+$envio,2)}}</div></div>
 	</div>
 </div>

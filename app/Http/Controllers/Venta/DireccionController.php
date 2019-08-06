@@ -49,6 +49,17 @@ class DireccionController extends Controller
             //dd('no esta logueado');
             return redirect('/login');
         }
+        $total=0;
+        foreach (Session::all() as $key => $value) {
+            if(strpos($key, 'producto')!==false)
+            {
+                $total++;
+            }
+        }
+        if($total==0)
+        {
+            return redirect()->route('ventas.create');
+        }
         //dd(Session::get('cantidadSeleccionada'.$value);
         foreach ($request->id as $key => $value) {
             if((Session::get('cantidadSeleccionada'.$value)+Producto::find($value)->inventario)<$request->cantidad[$key])
@@ -69,7 +80,10 @@ class DireccionController extends Controller
      */
     public function store(Request $request)
     {
-        //dd($request->all());
+        if(empty(Session::get('Datos_de_compra')))
+        {
+            return redirect()->route('ventas.create');
+        }
         if($request->codigo_postal)
         {
             Session::put('direccion',$request->all());    

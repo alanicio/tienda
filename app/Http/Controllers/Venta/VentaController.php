@@ -64,25 +64,10 @@ class VentaController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request);
-        // if(Auth::check())
-        // {
-        //     //dd(Auth::user()->id);
-        //     //dd('esta logueado');
-        //     $venta=new Venta();
-        //     $venta->user_id=Auth::user()->id;
-        // }
-        // else
-        // {
-        //     return redirect('/login');
-        // }
-        // foreach ($request->id as $key => $value) {
-        //     if((Session::get('cantidadSeleccionada'.$value)+Producto::find($value)->inventario)<$request->cantidad[$key])
-        //     {
-        //         return $this->create();
-        //     }
-        //     //if(Producto::find($value))
-        // }
+        if(empty(Session::get('Datos_de_compra')))
+        {
+            return redirect()->route('ventas.create');
+        }
         $venta=new Venta();
         $venta->user_id=Auth::user()->id;
         $productos=Producto::findMany(Session::get('Datos_de_compra')['id']);
@@ -235,12 +220,22 @@ class VentaController extends Controller
 
     public function RmCarrito($id)
     {
+        $total=0;
         $producto=Producto::find($id);
         $producto->inventario+=Session::get('cantidadSeleccionada'.$id);
         $producto->update();
         Session::forget('producto'.$id);
         Session::forget('cantidadOriginal'.$id);
         Session::forget('cantidadSeleccionada'.$id);
+        Session::forget('Datos_de_compra');
+        foreach (Session::all() as $key => $value) {
+            if(strpos($key, 'producto')!==false)
+            {
+                $total+=Producto::find($value)->costoMXN*Session::get('cantidadSeleccionada'.$value);
+            }
+        }
+        $resul['Ftotal']=number_format($total,2);
+        return response()->json($resul);
     }
 
     public function ConvertC(Request $request)
@@ -248,6 +243,7 @@ class VentaController extends Controller
         session_start();
         $producto=Producto::find($request->id);
         $producto->inventario+=$request->cantidad;
+        $total=0;
         if($producto->inventario>=0 && $request->numU>0)
         {
             
@@ -256,6 +252,7 @@ class VentaController extends Controller
                 'status'=>1,
                 'costo'=>$producto->costoMXN,
                 'inventario'=>$producto->inventario,
+                'total'=>number_format($producto->costoMXN*$request->numU,2),
                 ];
             Session::put('cantidadSeleccionada'.$producto->id,$request->numU);
              
@@ -265,7 +262,13 @@ class VentaController extends Controller
             $resul=['status'=>0,
                     'value'=>$request->numU+$request->cantidad];
         }
-        
+        foreach (Session::all() as $key => $value) {
+            if(strpos($key, 'producto')!==false)
+            {
+                $total+=Producto::find($value)->costoMXN*Session::get('cantidadSeleccionada'.$value);
+            }
+        }
+        $resul['Ftotal']=number_format($total,2);
         return response()->json($resul);
     }
 

@@ -201,7 +201,7 @@
 			<input class="btn btn-success" type="submit" value="Confirmar compra">
 			<a type="button" class="btn btn-warning" href="{{route('ventas.create')}}">Editar compra</a>
 			<!-- <a type="button" class="btn btn-danger">Cancelar compra</a> -->
-			<a href="javascript:history.back()" class="btn btn-info" role="button">Atras</a>
+			<a href="javascript:history.back()" class="btn btn-info" role="button">Atrás</a>
 		</form>
 			
 			

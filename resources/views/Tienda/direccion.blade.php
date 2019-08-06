@@ -24,7 +24,7 @@
         <option value="1">Recoger en sucursal sin costo</option>
 
         @if($peso<=19 && $peso>0)
-          <option value="2">Deseo que me lo envien (aplica costos de envio)</option>
+          <option value="2">Deseo que me lo envien (aplica costos de envío)</option>
         @endif
       </select>
     </div>

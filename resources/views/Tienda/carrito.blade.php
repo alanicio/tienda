@@ -11,10 +11,10 @@
 				<thead>
 					<tr>
 					  <th scope="col">Producto</th>
-					  <th scope="col">Precio c/u</th>
+					  <th scope="col">Precio unitario</th>
 					  <th scope="col">Cantidad</th>
 					  <th scope="col">Total</th>
-					  <th scope="col">Quitar</th>
+					  <th scope="col">Eliminar</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -27,9 +27,9 @@
 						<input type="hidden" name="id[]" value="{{$p->id}}">
 						<tr id="row{{$p->id}}">
 						  <th scope="row">{{stripslashes(utf8_decode($p->titulo))}}</th>
-						  <td><input id="costo{{$p->id}}" type="text" value="${{ round($p->costoMXN,2)}}" readonly="" style="width: 150px"></td>
+						  <td><input id="costo{{$p->id}}" type="text" value="${{ number_format($p->costoMXN,2)}}" readonly="" style="width: 150px"></td>
 						  <td><input type="number" name="cantidad[]" id="{{$p->id}}" min="1" value="{{Session::get('cantidadSeleccionada'.$p->id)>0?Session::get('cantidadSeleccionada'.$p->id):1}}" style="width: 75px;"></td>
-						  <td id="total{{$p->id}}">${{Session::get('cantidadSeleccionada'.$p->id)>0?round($p->costoMXN,2)*Session::get('cantidadSeleccionada'.$p->id):round($p->costoMXN,2)}}</td>
+						  <td id="total{{$p->id}}">${{number_format((Session::get('cantidadSeleccionada'.$p->id)>0?($p->costoMXN)*Session::get('cantidadSeleccionada'.$p->id):$p->costoMXN),2)}}</td>
 						  <td><a id="minus{{$p->id}}"><i class="fas fa-minus-circle" style="color:red;"></i></a></td>
 						</tr>
 						@php
@@ -45,7 +45,7 @@
 					@endforeach
 					<tr>
 						<th scope="row">Total</th>
-						<td ID="Ftotal">${{round($total,2)}}</td>
+						<td ID="Ftotal">${{number_format($total,2)}}</td>
 					</tr>
 				</tbody>
 			</table>
@@ -70,11 +70,15 @@
 		$.ajax({
 	        type: "GET",
 	        url: '{{url("/quitar_carrito")}}'+'/'+row,
-	        success: function(){
+	        success: function(res){
 	        	var sustraendo=parseFloat($('#total'+row).html().replace('$',''));
 	        	$('#row'+row).remove();
 	        	var minuendo=parseFloat($('#Ftotal').html().replace('$',''));
-	        	$('#Ftotal').html('$'+(minuendo-sustraendo).toFixed(2));
+	        	$('#Ftotal').html('$'+res.Ftotal);
+	        	if(res.Ftotal==0)
+	        	{
+	        		$('input[type="submit"]').remove();
+	        	}
 	        },
 	    });
 
@@ -84,23 +88,25 @@
 	$('input').change(function(){
 		// console.log(this.defaultValue);
 		var fila=$(this).attr('id');
-		var total=0;
+		var total=$('#Ftotal').html().replace('$','');
+		total=total.replace(',','');
+		//console.log(total);
 		var cantidad=-1*(parseInt(this.value)-parseInt(this.defaultValue));
 		this.defaultValue=this.value;
 		$.ajax({
 	        type: "POST",
 	        url: '{{url("/convert_c")}}',
-	        data:{id:fila,cantidad:cantidad,numU:this.value},
+	        data:{id:fila,cantidad:cantidad,numU:this.value,Ftotal:total},
 	        success: function(res){
 	        	if(res.status)
 	        	{
-	        		$('#total'+fila).html('$'+(parseFloat($('#'+fila).val())*res.costo).toFixed(2));
+	        		$('#total'+fila).html('$'+res.total);
 		        	$('[id^=total]').each(function(index){
 		        		//console.log($(this).html())
 		        		total+=parseFloat($(this).html().replace('$',''));
 		        	});
 		        	//console.log(total);
-		        	$('#Ftotal').html('$'+total.toFixed(2));
+		        	$('#Ftotal').html('$'+res.Ftotal);
 		        	$('#'+fila).defaultValue=$('#'+fila).value;
 		        	 
 	        	}

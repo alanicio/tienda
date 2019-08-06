@@ -9,10 +9,10 @@
 			<table class="table">
 			  <thead>
 			    <tr>
-			      <th scope="col"># de pedido</th>
+			      <th scope="col">Número de pedido</th>
 			      <th scope="col">Fecha</th>
 			      <th scope="col">Total</th>
-			      <th scope="col">Direccion</th>
+			      <th scope="col">Dirección</th>
 			      <th>Detalles</th>
 			    </tr>
 			  </thead>

@@ -12,8 +12,7 @@ use PDF;
 class ExampleController extends Controller
 {
     public function example(){
-    	$pdf = PDF::loadView('PDF.Recibo', ['venta'=>Venta::find(5)]);
-    	return view('PDF.Recibo',['venta'=>Venta::find(5)]);
+    	dd(Session::all());
     	
     }
 }
