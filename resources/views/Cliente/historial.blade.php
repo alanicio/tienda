@@ -29,7 +29,7 @@
 				      <td>${{number_format($venta->totalMXN,2)}}</td>
 				      @if($venta->direccion->estado=='nonex')
 				      	<td>GRUPO DE INTEGRADORES NONEX S.A. DE C.V.<br>
-						      Salaverry 987- 205 Lindavista entre Av. Ticoman y Calle. Salamina
+						      Salaverry 987- 304 Lindavista entre Av. Ticomán y Calle. Salamina
 						      C.P. 07300, Gustavo A. Madero, CDMX.<br><br></td>
 					  @elseif($venta->direccion->estado=='comunicarse')
 					  		<td>A tratar con agente de ventas</td>

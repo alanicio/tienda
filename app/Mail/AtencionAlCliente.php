@@ -29,6 +29,6 @@ class AtencionAlCliente extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.atencion_cliente');
+        return $this->view('mails.atencion_cliente')->subject('ATENCION A CLIENTE');
     }
 }

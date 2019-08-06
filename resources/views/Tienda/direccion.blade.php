@@ -23,16 +23,16 @@
         <option selected value="">Seleccione la forma de envio</option>
         <option value="1">Recoger en sucursal sin costo</option>
 
-        @if($peso<=19)
+        @if($peso<=19 && $peso>0)
           <option value="2">Deseo que me lo envien (aplica costos de envio)</option>
         @endif
       </select>
     </div>
     <div id="nonexDireccion" style="display: none;">
       GRUPO DE INTEGRADORES NONEX S.A. DE C.V.
-      Salaverry 987- 205 Lindavista entre Av. Ticoman y Calle. Salamina
+      Salaverry 987- 304 Lindavista entre Av. Ticomán y Calle. Salamina
       C.P. 07300, Gustavo A. Madero, CDMX.<br><br>
-      @if($peso>19)
+      @if($peso>19 || $peso==0)
         <div class="input-group ">
           <div class="input-group-prepend">
             <div class="input-group-text">

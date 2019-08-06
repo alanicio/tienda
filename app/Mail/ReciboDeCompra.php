@@ -17,10 +17,11 @@ class ReciboDeCompra extends Mailable
      *
      * @return void
      */
-    public $venta;
-    public function __construct(Venta $venta)
+    public $venta,$nonex;
+    public function __construct(Venta $venta,$nonex=null)
     {
         $this->venta=$venta;
+        $this->nonex=$nonex;
     }
 
     /**
@@ -31,6 +32,14 @@ class ReciboDeCompra extends Mailable
     public function build()
     {
         $venta=$this->venta;
-        return $this->view('mails.Recibo')->subject('Recibo de compra #NX'.$venta->created_at->format('y').$venta->created_at->format('m').($venta->id+99));
+        if($this->nonex)
+        {
+            return $this->view('mails.Recibo')->subject('SEGUIMIENTO A PEDIDO #NX'.$venta->created_at->format('y').$venta->created_at->format('m').($venta->id+99));
+        }
+        else
+        {
+            return $this->view('mails.Recibo')->subject('Recibo de compra #NX'.$venta->created_at->format('y').$venta->created_at->format('m').($venta->id+99));
+        }
+            
     }
 }

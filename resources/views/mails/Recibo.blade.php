@@ -9,7 +9,7 @@
 	    $peso+=$p->peso*$p->pivot->cantidad;
 
 	  }
-	  if($peso<=3)
+	  if($peso<=3 && $peso>0)
 	  {
 	    $envio=130;
 	  }
@@ -21,7 +21,7 @@
 	  {
 	    $envio=180;
 	  }
-	  elseif($peso<=19)
+	  elseif($peso<=19 || $peso==0)
 	  {
 	    $envio=340;
 	  }
@@ -52,10 +52,10 @@
 <div style="margin-left: 15%">
 	<div><h4>{{$venta->user->name}}, gracias por tu compra</h4></div>
 	<h5 style="font-family: 'Gotham Light';">Número de pedido #NX{{$venta->created_at->format('y')}}{{$venta->created_at->format('m')}}{{$venta->id+99}}</h5>
-	<p>Referencia telefónica:{{$venta->direccion->telefono}}</p>
+	<p><strong>Referencia telefónica:</strong> {{$venta->direccion->telefono}}</p>
 	@if($venta->direccion->estado=='nonex')
 		<p>Le enviaremos un correo de confirmación cuando pueda recoger su  pedido en:<br>GRUPO DE INTEGRADORES NONEX S.A. DE C.V.<br>
-			      Salaverry 987- 304 Lindavista entre Av. Ticoman y Calle. Salamina
+			      Salaverry 987- 304 Lindavista entre Av. Ticomán y Calle. Salamina
 			      C.P. 07300, Gustavo A. Madero, CDMX.<br></p>
 	@elseif($venta->direccion->estado=='comunicarse')
 		<p>En breve un agente de ventas se comunicara con usted</p>
@@ -63,6 +63,9 @@
 		<p>Se le hará llegar a:<br>
 			{{$venta->direccion->calle}}, {{$venta->direccion->codigo_postal}}, {{$venta->direccion->num_ext}}, {{$venta->direccion->num_int}}, {{$venta->direccion->colonia}}, {{$venta->direccion->municipio}}, {{$venta->direccion->estado}} 
 		</p>
+	@endif
+	@if($nonex)
+		<strong>Correo del cliente:</strong> {{$venta->user->email}}
 	@endif
 	<h5>Tipo de entrega</h5>
 	<p>Terrestre</p>
@@ -94,8 +97,8 @@
 	<br>
 	<div style="margin-left:30%">
 		<div><strong>Subtotal</strong> <div style="display: inline-block;margin-left: 75px">${{number_format($venta->totalMXN/1.16,2)}}</div></div>
-		<div><strong>Costo de envío </strong><div style="display: inline-block;margin-left: 46px">${{number_format($envio/1.16,2)}}</div></div>
-		<div><strong>Iva </strong><div style="display: inline-block;margin-left: 115px">${{number_format((($venta->totalMXN+$envio)/1.16)*0.16,2)}}</div></div>
+		<div><strong>Costo de envío </strong><div style="display: inline-block;margin-left: 68px">${{number_format($envio/1.16,2)}}</div></div>
+		<div><strong>Iva </strong><div style="display: inline-block;margin-left: 119px">${{number_format((($venta->totalMXN+$envio)/1.16)*0.16,2)}}</div></div>
 		<div><strong>Total </strong><div style="display: inline-block;margin-left: 97px">${{number_format($venta->totalMXN+$envio,2)}}</div></div>
 	</div>
 </div>

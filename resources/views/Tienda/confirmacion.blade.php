@@ -11,7 +11,7 @@
 	    $peso+=Producto::find($id)->peso*Session::get('cantidadSeleccionada'.$id);
 
 	  }
-	  if($peso<=3)
+	  if($peso<=3 && $peso>0)
 	  {
 	    $envio=130;
 	  }
@@ -23,7 +23,7 @@
 	  {
 	    $envio=180;
 	  }
-	  elseif($peso<=19)
+	  elseif($peso<=19 || $peso==0)
 	  {
 	    $envio=340;
 	  }
@@ -80,7 +80,7 @@
 			<p>Referencia telefónica:{{Session::get('telefono')}}</p>
 			@if(Session::get('direccion')=='nonex')
 				GRUPO DE INTEGRADORES NONEX S.A. DE C.V.<br>
-			      Salaverry 987- 304 Lindavista entre Av. Ticoman y Calle. Salamina
+			      Salaverry 987- 304 Lindavista entre Av. Ticomán y Calle. Salamina
 			      C.P. 07300, Gustavo A. Madero, CDMX.<br><br>
 			@elseif(Session::get('direccion')=='comunicarse')
 				<p>A tratar con agente de ventas</p>

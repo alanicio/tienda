@@ -159,7 +159,7 @@ class VentaController extends Controller
     public function Nonextore(Venta $venta)
     {
         Mail::to($venta->user->email)->send(new ReciboDeCompra($venta));
-        Mail::to('ventas@sistemasnonex.com')->send(new ReciboDeCompra($venta));
+        Mail::to('ventas@sistemasnonex.com')->send(new ReciboDeCompra($venta,1));
         return $this->show(Auth::User()->id);
     }
 
