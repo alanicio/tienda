@@ -34,7 +34,7 @@ class VentaController extends Controller
      */
     public function index()
     {   
-        //dd(Producto::findMany(array_slice(Session::all(), 3)));
+         return view('Cliente.historial',['ventas'=>Auth::User()->ventas()->orderBy('id','DESC')->get()]);
         
     }
 
@@ -152,7 +152,7 @@ class VentaController extends Controller
         //dd(Session::all());
         //return view('mails.Recibo',['venta'=>$venta]);
         $this->Nonextore($venta);
-        return $this->show(Auth::User()->id);
+        return $this->index();
     }
 
     //Enviar correo de la venta realizada
@@ -172,7 +172,7 @@ class VentaController extends Controller
     public function show($id)
     {
         //dd(User::find($id)->ventas);
-        return view('Cliente.historial',['ventas'=>User::find($id)->ventas]);
+        return view('Cliente.detalles',['venta'=>Venta::find($id)]);
     }
 
     /**

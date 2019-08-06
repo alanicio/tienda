@@ -36,7 +36,7 @@
             <li class="nav-item dropdown" id="usuario">
               <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{Auth::User()->name}}</a>
               <div class="dropdown-menu">
-                <a class="dropdown-item" href="{{Route('ventas.show',['id'=>Auth::User()->id])}}">MI CUENTA</a>
+                <a class="dropdown-item" href="{{Route('ventas.index')}}">MI CUENTA</a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{{ route('logout') }}"
                                          onclick="event.preventDefault();

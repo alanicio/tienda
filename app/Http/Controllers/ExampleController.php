@@ -7,12 +7,13 @@ use Mail;
 use App\Mail\ReciboDeCompra;
 use App\Venta;
 use Session;
+use PDF;
 
 class ExampleController extends Controller
 {
     public function example(){
-    	dd(Session::all());
-    	return view('mails.Recibo',['venta'=>Venta::find(5)]);
+    	$pdf = PDF::loadView('PDF.Recibo', ['venta'=>Venta::find(5)]);
+    	return view('PDF.Recibo',['venta'=>Venta::find(5)]);
     	
     }
 }

@@ -61,7 +61,14 @@
 		<p>En breve un agente de ventas se comunicara con usted</p>
 	@else
 		<p>Se le hará llegar a:<br>
-			{{$venta->direccion->calle}}, {{$venta->direccion->codigo_postal}}, {{$venta->direccion->num_ext}}, {{$venta->direccion->num_int}}, {{$venta->direccion->colonia}}, {{$venta->direccion->municipio}}, {{$venta->direccion->estado}} 
+			{{$venta->direccion->calle}}
+			@if(isset($venta->direccion->num_int))
+				{{$venta->direccion->num_ext}}-{{$venta->direccion->num_int}},
+			@else
+				{{$venta->direccion->num_ext}}
+			@endif
+			{{$venta->direccion->colonia}}, 
+			{{$venta->direccion->codigo_postal}},  {{$venta->direccion->municipio}}, {{$venta->direccion->estado}} 
 		</p>
 	@endif
 	@if($nonex)
@@ -95,11 +102,11 @@
 		</tbody>
 	</table>
 	<br>
-	<div style="margin-left:30%">
-		<div><strong>Subtotal</strong> <div style="display: inline-block;margin-left: 75px">${{number_format($venta->totalMXN/1.16,2)}}</div></div>
-		<div><strong>Costo de envío </strong><div style="display: inline-block;margin-left: 68px">${{number_format($envio/1.16,2)}}</div></div>
-		<div><strong>Iva </strong><div style="display: inline-block;margin-left: 119px">${{number_format((($venta->totalMXN+$envio)/1.16)*0.16,2)}}</div></div>
-		<div><strong>Total </strong><div style="display: inline-block;margin-left: 97px">${{number_format($venta->totalMXN+$envio,2)}}</div></div>
+	<div style="margin-left:30%;width: 28%;">
+		<div><strong>Subtotal</strong> <div style="display: inline-block; float: right;">${{number_format($venta->totalMXN/1.16,2)}}</div></div>
+		<div><strong>Costo de envío </strong><div style="display: inline-block; float: right">${{number_format($envio/1.16,2)}}</div></div>
+		<div><strong>Iva </strong><div style="display: inline-block; float: right">${{number_format((($venta->totalMXN+$envio)/1.16)*0.16,2)}}</div></div>
+		<div><strong>Total </strong><div style="display: inline-block; float: right">${{number_format($venta->totalMXN+$envio,2)}}</div></div>
 	</div>
 </div>
 <br><br><br>
