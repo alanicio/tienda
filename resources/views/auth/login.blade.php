@@ -56,6 +56,7 @@
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Iniciar sesion') }}
                                 </button>
+                                <a id="add_item" type="button" class="btn btn-warning" href="{{Route('register')}}">¿No tienes cuenta?</a>
 
                                 @if (Route::has('password.request'))
                                     <a class="btn btn-link" href="{{ route('password.request') }}">

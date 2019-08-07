@@ -28,11 +28,11 @@
             <a class="nav-link" href="{{url('/')}}">TIENDA</i></a>
           </li>
          
-
-          @if(Auth::check())
-            <li class="nav-item" id="carrito">
+           <li class="nav-item" id="carrito">
               <a class="nav-link" href="{{Route('ventas.create')}}"><i class="fas fa-shopping-cart" style="color: #E55D28"></i></a>
             </li>
+          @if(Auth::check())
+           
             <li class="nav-item dropdown" id="usuario">
               <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{Auth::User()->name}}</a>
               <div class="dropdown-menu">

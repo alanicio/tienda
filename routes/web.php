@@ -23,6 +23,7 @@ Route::resource('categorias','Producto\CategoriaController');
 Route::post('venta/direccion','Venta\DireccionController@create')->name('direccion.create');
 Route::post('cp','Venta\DireccionController@cp');
 Route::post('venta/confirmacion','Venta\DireccionController@store');
+Route::get('confirmacion','Venta\DireccionController@redireccion');
 
 //Ventas
 Route::post('carrito','Venta\VentaController@shopping');

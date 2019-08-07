@@ -11,14 +11,14 @@ use Session;
 
 class DireccionController extends Controller
 {
-    public function __construct() {
-        $this->middleware(function ($request, $next) {
-            if(Auth::check()) {
-                return $next($request); 
-            }
-            return redirect('/');           
-        });
-    }
+    // public function __construct() {
+    //     $this->middleware(function ($request, $next) {
+    //         if(Auth::check()) {
+    //             return $next($request); 
+    //         }
+    //         return redirect('/');           
+    //     });
+    // }
     /**
      * Display a listing of the resource.
      *
@@ -36,19 +36,19 @@ class DireccionController extends Controller
      */
     public function create(Request $request)
     {
-        //dd($request->all());
-        if(Auth::check())
-        {
-            //dd(Auth::user()->id);
-            //dd('esta logueado');
-            $venta=new Venta();
-            $venta->user_id=Auth::user()->id;
-        }
-        else
-        {
-            //dd('no esta logueado');
-            return redirect('/login');
-        }
+        
+        // if(Auth::check())
+        // {
+        //     //dd(Auth::user()->id);
+        //     //dd('esta logueado');
+        //     $venta=new Venta();
+        //     $venta->user_id=Auth::user()->id;
+        // }
+        // else
+        // {
+        //     //dd('no esta logueado');
+        //     return redirect('/login');
+        // }
         $total=0;
         foreach (Session::all() as $key => $value) {
             if(strpos($key, 'producto')!==false)
@@ -98,7 +98,10 @@ class DireccionController extends Controller
             Session::put('telefono',$request->telefono);
         }
         $productos=Producto::findMany(Session::get('Datos_de_compra')['id']);
-        return view('Tienda.confirmacion',['productos'=>$productos]);
+        if(Auth::check())
+            return view('Tienda.confirmacion',['productos'=>$productos]);
+        else
+            return redirect('/login');
     }
 
     /**
@@ -175,5 +178,17 @@ class DireccionController extends Controller
             
         }
         return view('Tienda.cp',['colonias'=>$colonias,'estado'=>$estado,'municipio'=>$municipio]);
+    }
+    public function redireccion()
+    {
+        if(Session::get('direccion')!==null)
+        {
+            $productos=Producto::findMany(Session::get('Datos_de_compra')['id']);
+            return view('Tienda.confirmacion',['productos'=>$productos]);
+        }
+        else
+        {
+            return redirect('/');
+        }
     }
 }

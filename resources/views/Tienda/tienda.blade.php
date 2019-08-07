@@ -75,7 +75,7 @@ use \App\Http\Controllers\Producto\ProductoController;
             @endif
             Existencias: <strong>{{number_format($p->inventario)}}</strong>
             <div class=" mt-auto text-center">
-              @if(Auth::check())
+              
                 @if($p->inventario>0)
                   <input type="number" name="{{$p->id}}" id="cantidad{{$p->id}}" min="1" value="{{Session::get('cantidadSeleccionada'.$p->id)>0?Session::get('cantidadSeleccionada'.$p->id):0}}" style="width: 30%;">
                   @php
@@ -97,11 +97,6 @@ use \App\Http\Controllers\Producto\ProductoController;
                 @else
                   <a id="" type="button" class="btn btn-danger disabled" style="float: right;"><i class="fas fa-times-circle"></i> Producto agotado</a>
                 @endif
-              @else
-                <a id="" type="button" class="btn btn-primary btn-sm" style="margin-bottom: 10px;" href="{{Route('login')}}"><i class="fas fa-sign-in-alt"></i> Inicia sesión para comprar</a>
-
-                <a id="" type="button" class="btn btn-warning btn-sm" style="margin-bottom: 10px;" href="{{Route('register')}}">¿No tienes cuenta?</a>
-              @endif
             </div>
           </div>
           <!-- <div class="card-footer">

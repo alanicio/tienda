@@ -19,14 +19,14 @@ use Artisan;
 
 class VentaController extends Controller
 {
-    public function __construct() {
-        $this->middleware(function ($request, $next) {
-            if(Auth::check()) {
-                return $next($request); 
-            }
-            return redirect('/');           
-        });
-    }
+    // public function __construct() {
+    //     $this->middleware(function ($request, $next) {
+    //         if(Auth::check()) {
+    //             return $next($request); 
+    //         }
+    //         return redirect('/');           
+    //     });
+    // }
     /**
      * Display a listing of the resource.
      *
@@ -34,7 +34,10 @@ class VentaController extends Controller
      */
     public function index()
     {   
+        if(Auth::check())
          return view('Cliente.historial',['ventas'=>Auth::User()->ventas()->orderBy('id','DESC')->get()]);
+        else
+            return redirect('/');
         
     }
 
@@ -156,8 +159,10 @@ class VentaController extends Controller
      */
     public function show($id)
     {
-        //dd(User::find($id)->ventas);
-        return view('Cliente.detalles',['venta'=>Venta::find($id)]);
+        if(Auth::check())
+            return view('Cliente.detalles',['venta'=>Venta::find($id)]);
+        else
+            return redirect('/');
     }
 
     /**
@@ -204,6 +209,7 @@ class VentaController extends Controller
         $producto=Producto::find($id);
         if($producto->inventario>0)
         {
+
             Session::put('producto'.$id,$id);
             Session::put('cantidadOriginal'.$id,$producto->inventario);
             Session::put('cantidadSeleccionada'.$id,1);
