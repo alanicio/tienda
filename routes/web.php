@@ -42,11 +42,11 @@ Auth::routes();
 
 
 // Route::get('cargar_datos','Producto\ProductoController@CargarDatos');
-Route::get('cargar_productos','Producto\ProductoController@ActualizarProductos');
+//Route::get('cargar_productos','Producto\ProductoController@ActualizarProductos');
 // Route::get('cargar_categorias','Producto\CategoriaController@CargarCategorias');
 
 Route::get('example','ExampleController@example');
 
 
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');

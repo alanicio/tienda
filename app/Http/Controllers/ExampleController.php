@@ -8,11 +8,12 @@ use App\Mail\ReciboDeCompra;
 use App\Venta;
 use Session;
 use PDF;
+use App\Categoria;
 
 class ExampleController extends Controller
 {
     public function example(){
-    	dd(Session::all());
+    	 dd(Categoria::get()->count());
     	
     }
 }
